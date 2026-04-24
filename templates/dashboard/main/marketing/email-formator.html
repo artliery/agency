@@ -1,0 +1,191 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<style>
+    #copy-button{
+        cursor:pointer;
+        transition: all 0.3s ease;
+    }
+    #copy-button:hover{
+        color: #6366f1 !important;
+        transform: scale(1.05);
+    }
+    .formatter-card {
+        transition: all 0.3s ease;
+    }
+    .formatter-card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+</style>
+
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="#">Marketing</a></li>
+              <li class="breadcrumb-item" aria-current="Email Formatter">Email Formatter</li>
+            </ul>
+          </div>
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h2 class="mb-0">Email Formatter</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+
+      <div class="col-md-12">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+          <i class="ti ti-info-circle me-2"></i>
+          <strong>How to use:</strong> Paste your unformatted emails in the left box and get comma-separated emails in the right box.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Email Formatting Tool</h5>
+            <p class="text-muted mb-0">Convert unformatted emails to comma-separated format for marketing campaigns</p>
+          </div>
+          <div class="card-body">
+            <form method="" enctype="multipart/form-data">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card formatter-card border">
+                    <div class="card-header">
+                      <h6 class="mb-0">
+                        <i class="ti ti-mail me-1"></i>Unformatted Emails
+                      </h6>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="email-input" class="form-label">Input Emails</label>
+                        <textarea id="email-input" class="form-control" rows="15" placeholder="email1@gmail.com&#10;email2@gmail.com&#10;email3@gmail.com&#10;or,&#10;email1@gmail.com email2@gmail.com email3@gmail.com"></textarea>
+                        <small class="text-muted">You can paste emails separated by new lines or spaces</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card formatter-card border">
+                    <div class="card-header">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">
+                          <i class="ti ti-check me-1"></i>Formatted Emails
+                        </h6>
+                        <span id="copy-button" class="text-primary" title="Copy to clipboard">
+                          <i class="ti ti-copy me-1"></i>Copy
+                        </span>
+                      </div>
+                    </div>
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="formatted-emails" class="form-label">Output (Comma-separated)</label>
+                        <textarea class="form-control" readonly id="formatted-emails" rows="15" name="manually_added_emails" value="{{ form.manually_added_emails.value }}"></textarea>
+                        <small class="text-muted">Ready to use in your email marketing campaigns</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-4">
+                <div class="col-md-12">
+                  <div class="d-flex gap-2">
+                    <button type="button" class="btn btn-outline-primary" onclick="clearInput()">
+                      <i class="ti ti-trash me-1"></i>Clear Input
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="clearOutput()">
+                      <i class="ti ti-trash me-1"></i>Clear Output
+                    </button>
+                    <button type="button" class="btn btn-success" onclick="copyToClipboard()">
+                      <i class="ti ti-copy me-1"></i>Copy Formatted Emails
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+  </div>
+  <!-- [ Main Content ] end -->
+</div>
+
+<script>
+    const emailInput = document.getElementById('email-input');
+    const formattedEmailsInput = document.getElementById('formatted-emails');
+
+    emailInput.addEventListener('input', function() {
+        const emails = emailInput.value.split(/\s+|\n+/).filter(Boolean); // Split by whitespace or line breaks and remove empty strings
+        const formattedEmails = emails.join(',');
+
+        formattedEmailsInput.value = formattedEmails;
+    });
+
+    function copyToClipboard() {
+        formattedEmailsInput.select();
+        document.execCommand('copy');
+        
+        // Show success message
+        const copyButton = document.getElementById('copy-button');
+        const originalText = copyButton.innerHTML;
+        copyButton.innerHTML = '<i class="ti ti-check me-1"></i>Copied!';
+        copyButton.style.color = '#28a745';
+        
+        setTimeout(() => {
+            copyButton.innerHTML = originalText;
+            copyButton.style.color = '#6366f1';
+        }, 2000);
+    }
+
+    function clearInput() {
+        emailInput.value = '';
+        formattedEmailsInput.value = '';
+    }
+
+    function clearOutput() {
+        formattedEmailsInput.value = '';
+    }
+
+    // Modern clipboard API (if available)
+    if (navigator.clipboard) {
+        document.getElementById('copy-button').addEventListener('click', async function() {
+            try {
+                await navigator.clipboard.writeText(formattedEmailsInput.value);
+                const copyButton = this;
+                const originalText = copyButton.innerHTML;
+                copyButton.innerHTML = '<i class="ti ti-check me-1"></i>Copied!';
+                copyButton.style.color = '#28a745';
+                
+                setTimeout(() => {
+                    copyButton.innerHTML = originalText;
+                    copyButton.style.color = '#6366f1';
+                }, 2000);
+            } catch (err) {
+                // Fallback to execCommand
+                copyToClipboard();
+            }
+        });
+    } else {
+        // Fallback for older browsers
+        document.getElementById('copy-button').addEventListener('click', copyToClipboard);
+    }
+</script>
+
+{% endblock %}

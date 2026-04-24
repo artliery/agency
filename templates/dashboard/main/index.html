@@ -1,0 +1,471 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load customtag %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Dashboard</a></li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h2 class="mb-0">Dashboard</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ Row 1 ] start -->
+        <div class="col-md-12 col-xxl-3">
+          <div class="card statistics-card-1">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="avtar bg-brand-color-1 text-white me-3">
+                  <i class="ph-duotone ph-newspaper f-26"></i>
+                </div>
+                <div>
+                  <p class="text-muted mb-0">Blogs</p>
+                  <div class="d-flex align-items-end">
+                    <h2 class="mb-0 f-w-500">{{blogs.count}}</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-xxl-3">
+            <div class="card statistics-card-1">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="avtar bg-brand-color-2 text-white me-3">
+                    <i class="ph-duotone ph-wrench f-26"></i>
+                  </div>
+                  <div>
+                    <p class="text-muted mb-0">Services</p>
+                    <div class="d-flex align-items-end">
+                      <h2 class="mb-0 f-w-500">{{services.count}}</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="col-md-6 col-xxl-3">
+            <div class="card statistics-card-1">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="avtar bg-brand-color-3 text-white me-3">
+                    <i class="ph-duotone ph-chat-circle-text f-26"></i>
+                  </div>
+                  <div>
+                    <p class="text-muted mb-0">Testimonials</p>
+                    <div class="d-flex align-items-end">
+                      <h2 class="mb-0 f-w-500">{{testimonials.count}}</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-xxl-3">
+          <div class="card statistics-card-1">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="avtar bg-brand-color-4 text-white me-3">
+                  <i class="ph-duotone ph-briefcase f-26"></i>
+                </div>  
+                <div>
+                  <p class="text-muted mb-0">Projects</p>
+                  <div class="d-flex align-items-end">
+                    <h2 class="mb-0 f-w-500">{{projects.count}}</h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-xxl-3">
+            <div class="card statistics-card-1">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="avtar bg-brand-color-5 text-white me-3">
+                    <i class="ph-duotone ph-users-three f-26"></i>
+                  </div>
+                  <div>
+                    <p class="text-muted mb-0">Team Members</p>
+                    <div class="d-flex align-items-end">
+                      <h2 class="mb-0 f-w-500">{{teams.count}}</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-xxl-3">
+              <div class="card statistics-card-1">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div class="avtar bg-brand-color-6 text-white me-3">
+                      <i class="ph-duotone ph-handshake f-26"></i>
+                    </div>
+                    <div>
+                      <p class="text-muted mb-0">Clients</p>
+                      <div class="d-flex align-items-end">
+                        <h2 class="mb-0 f-w-500">{{clients.count}}</h2>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-6 col-xxl-3">
+            <div class="card statistics-card-1">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="avtar bg-brand-color-7 text-white me-3">
+                    <i class="ph-duotone ph-address-book f-26"></i>
+                  </div>
+                  <div>
+                    <p class="text-muted mb-0">Contacts</p>
+                    <div class="d-flex align-items-end">
+                      <h2 class="mb-0 f-w-500">{{contacts.count}}</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-xxl-3">
+            <div class="card statistics-card-1">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="avtar bg-brand-color-8 text-white me-3">
+                    <i class="ph-duotone ph-bell-ringing f-26"></i>
+                  </div>
+                  <div>
+                    <p class="text-muted mb-0">Subscribers</p>
+                    <div class="d-flex align-items-end">
+                      <h2 class="mb-0 f-w-500">{{subscribers.count}}</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <!-- [ Row 1 ] end -->
+         
+        <!-- [ Row 2 ] start -->
+        <div class="col-md-6">
+          <div class="card table-card">
+            <div class="card-header">
+              <h5>Recent Contacts</h5>
+            </div>
+            <div class="card-body py-3 px-0">
+              <div class="table-responsive affiliate-table">
+                <table class="table table-hover table-borderless mb-0">
+                  <tbody>                    
+                    {% if contacts %}
+                      <tr>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        <th>Created At</th>
+                      </tr>
+                        {% for contact in contacts %}
+                            <tr>
+                            <td class="f-w-600">
+                              <a href="javascript:void(0)" class="text-info" data-bs-toggle="modal" data-bs-target="#contactModal{{contact.id}}">
+                                {{ contact.subject|truncatechars:20 }}
+                              </a>
+                              
+                              <!-- Contact Modal -->
+                              <div class="modal fade" id="contactModal{{contact.id}}" tabindex="-1" role="dialog" aria-labelledby="contactModalTitle{{contact.id}}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="contactModalTitle{{contact.id}}">{{ contact.subject }}</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+                                      <div class="mb-3">
+                                        <strong>Name:</strong> {{ contact.name }}
+                                      </div>
+                                      <div class="mb-3">
+                                        <strong>Email:</strong> <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                                      </div>
+                                      {% if contact.phone %}
+                                      <div class="mb-3">
+                                        <strong>Phone:</strong> <a href="tel:{{ contact.phone }}">{{ contact.phone }}</a>
+                                      </div>
+                                      {% endif %}
+                                      <div class="mb-3">
+                                        <strong>Message:</strong><br>
+                                        <div class="mt-2 p-3 bg-light rounded" style="word-wrap: break-word; white-space: pre-wrap;">{{ contact.message }}</div>
+                                      </div>
+                                      <div>
+                                        <strong>Submitted on:</strong> {{ contact.created_at }}
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                            <td class="f-w-600">{{ contact.message|truncatechars:30 }}</td>
+                            <td class="f-w-600">{{ contact.created_at }}</td>
+                            </tr>
+                        {% endfor %}
+                      {% else %}
+                        <tr>
+                          <td colspan="3" class="text-center">No contacts found</td>
+                        </tr>
+                    {% endif %}
+                    
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="card table-card">
+            <div class="card-header">
+              <h5>Recent Subscribers</h5>
+            </div>
+            <div class="card-body py-3 px-0">
+              <div class="table-responsive">
+                <table class="table table-hover table-borderless mb-0">
+                  <tbody>
+                    {% if subscribers %}
+                      <tr>
+                        <th>Email</th>
+                        <th>Subscribed At</th>
+                      </tr>
+                      {% for subscriber in subscribers %}
+                        <tr>
+                          <td>{{ subscriber.email|truncatechars:50 }}</td>
+                          <td>{{ subscriber.created_at }}</td>
+                        </tr>
+                      {% endfor %}
+                      {% else %}
+                        <tr>
+                          <td colspan="2" class="text-center">No subscribers found</td>
+                        </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-6 {% if request.user.role == 'Admin' %}col-xl-6 {% else %}col-xl-7{% endif %} col-md-6 col-sm-12 notification box-col-6">
+          <div class="card height-equal">
+            <div class="card-header card-no-border">
+                <div class="header-top">
+                  <h5 class="m-0">Visitor By OS</h5>
+                  
+                  <div class="card-header-right-icon">
+                  </div>
+                </div>
+                {% if analytics.total_visitors%}
+                    <p>Out of {{analytics.total_visitors}} Visitors</p>
+                {% endif %}
+            </div>
+            <div class="card-body pt-0">
+              {% if analytics.total_visitors%}
+              <canvas id="osVisitorChart"></canvas>
+              {% else %}
+              <li>No data available</li>
+              {% endif %}
+            </div>
+          </div>
+      </div>
+
+      <div class="col-xxl-6 {% if request.user.role == 'Admin' %}col-xl-6 {% else %}col-xl-7{% endif %} col-md-6 col-sm-12 notification box-col-6">
+          <div class="card height-equal">
+            <div class="card-header card-no-border">
+                <div class="header-top">
+                  <h5 class="m-0">Visitor By Browser</h5>
+                  
+                  <div class="card-header-right-icon">
+                  </div>
+                </div>
+                {% if analytics.total_visitors%}
+                    <p>Out of {{analytics.total_visitors}} Visitors</p>
+                {% endif %}
+            </div>
+            <div class="card-body pt-0">
+              {% if analytics.total_visitors%}
+              <canvas id="browserVisitorChart"></canvas>
+              {% else %}
+              <li>No data available</li>
+              {% endif %}
+            </div>
+          </div>
+      </div>
+
+
+
+        <!-- [ Row 2 ] end -->
+
+
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+
+  {{ analytics.os_percentages|json_script:"os-data" }}
+  {{ analytics.browser_percentages|json_script:"browser-data" }}
+  
+  <script src="{% static 'dashboard/assets/js/plugins/chart.js' %}"></script>
+  <script>
+    const osDataElement = document.getElementById('os-data');
+    const browserDataElement = document.getElementById('browser-data');
+    
+    const osDataPercentages = osDataElement ? JSON.parse(osDataElement.textContent) : [];
+    const browserDataPercentages = browserDataElement ? JSON.parse(browserDataElement.textContent) : [];
+    
+    // Chart colors
+    const chartColors = [
+      '#667eea',
+      '#764ba2', 
+      '#f093fb',
+      '#f5576c',
+      '#4facfe',
+      '#00f2fe',
+      '#43e97b',
+      '#38f9d7',
+      '#fa709a',
+      '#fee140'
+    ];
+
+    if (document.getElementById('osVisitorChart')) {
+      const osCtx = document.getElementById('osVisitorChart').getContext('2d');
+      
+      const osLabels = osDataPercentages.map(item => item.name);
+      const osData = osDataPercentages.map(item => item.percentage);
+      
+      if (osLabels.length > 0 && osData.length > 0) {
+        new Chart(osCtx, {
+          type: 'doughnut',
+          data: {
+            labels: osLabels,
+            datasets: [{
+              data: osData,
+              backgroundColor: chartColors.slice(0, osLabels.length),
+              borderWidth: 0,
+              hoverBorderWidth: 2,
+              hoverBorderColor: '#fff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+              padding: {
+                top: 20
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  padding: 20,
+                  usePointStyle: true,
+                  font: {
+                    size: 12
+                  }
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return context.label + ': ' + context.parsed + '%';
+                  }
+                }
+              }
+            },
+            cutout: '60%'
+          }
+        });
+      } else {
+        document.getElementById('osVisitorChart').parentElement.innerHTML = '<div class="text-center text-muted py-4">No OS data available</div>';
+      }
+    }
+
+    if (document.getElementById('browserVisitorChart')) {
+      const browserCtx = document.getElementById('browserVisitorChart').getContext('2d');
+      
+      const browserLabels = browserDataPercentages.map(item => item.name);
+      const browserData = browserDataPercentages.map(item => item.percentage);
+      
+      if (browserLabels.length > 0 && browserData.length > 0) {
+        new Chart(browserCtx, {
+          type: 'doughnut',
+          data: {
+            labels: browserLabels,
+            datasets: [{
+              data: browserData,
+              backgroundColor: chartColors.slice(0, browserLabels.length),
+              borderWidth: 0,
+              hoverBorderWidth: 2,
+              hoverBorderColor: '#fff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+              padding: {
+                top: 20
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  padding: 20,
+                  usePointStyle: true,
+                  font: {
+                    size: 12
+                  }
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    return context.label + ': ' + context.parsed + '%';
+                  }
+                }
+              }
+            },
+            cutout: '60%'
+          }
+        });
+      } else {
+        document.getElementById('browserVisitorChart').parentElement.innerHTML = '<div class="text-center text-muted py-4">No browser data available</div>';
+      }
+    }
+  </script>
+
+
+{% endblock content %}

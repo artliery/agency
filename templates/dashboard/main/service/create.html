@@ -1,0 +1,153 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load customtag %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<style>
+   label.switch {
+       margin-top: -35px;
+   }
+   @media only screen and (max-width: 600px) {
+     #ver-pills-tab {
+        display: -webkit-box;
+        margin-bottom: 18px;
+    }
+   }
+   
+</style>
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'adminServiceList' %}">Services</a></li>
+                <li class="breadcrumb-item" aria-current="Create Service">Create Service</li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h2 class="mb-0">Create Service</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+         <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.media}}   
+            {% if form.errors %}
+            <div class="alert alert-danger">
+               <strong>Error:</strong>
+               <ul>
+                  {% for field, errors in form.errors.items %}
+                  {% for error in errors %}
+                  <li>{{ field }}: {{ error }}</li>
+                  {% endfor %}
+                  {% endfor %}
+               </ul>
+            </div>
+            {% endif %}                   
+            <div class="row mb-3">
+               <div class="col-md-12">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.detail_page_image.id_for_label }}" class="form-label">Service Detail Page Image</label>
+                        {{ form.detail_page_image }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row mb-3">
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">Name</label>
+                        {{ form.name }}
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.slug.id_for_label }}" class="form-label">Slug ( Read Only )</label>
+                        {{ form.slug|attr:'readonly=readonly' }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row mb-3">
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.fontawesome_icon_class.id_for_label }}" class="form-label">Font-Awesome Icon Class ( <a href="https://fontawesome.com/v5/search?m=free" target="_blank">Use V5</a> )</label>
+                        {{ form.fontawesome_icon_class }}
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.short_description.id_for_label }}" class="form-label">Short Description</label>
+                        {{ form.short_description }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row mb-1">
+               <div class="col-md-12">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.detail_page_description.id_for_label }}" class="form-label">Detail Page Description</label>
+                        <br>
+                        <div class="form-control ckf">{{ form.detail_page_description }}</div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row mb-1">
+               <div class="col-md-12">
+                   <div class="card">
+                      <div class="card-body">
+                        <div class="form-group">
+                           <div class="form-check">
+                             {{ form.show_call_now_widget }}
+                             <label class="form-check-label" for="{{ form.show_call_now_widget.id_for_label }}">
+                               <strong>Call Now Widget</strong>
+                             </label>
+                           </div>
+                           <small class="text-muted">After turning it off your call now widget will disappear. Keep it on for the widget.</small>
+                           {% if form.show_call_now_widget.errors %}
+                             <div class="invalid-feedback d-block">
+                               {% for error in form.show_call_now_widget.errors %}
+                                 {{ error }}
+                               {% endfor %}
+                             </div>
+                           {% endif %}
+                         </div>
+                      </div>
+                   </div>
+               </div>
+            </div>
+            <button class="btn btn-primary mb-3" type="submit">Create</button>
+         </form>
+      </div>
+        <!-- [ sample-page ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+{% endblock %}

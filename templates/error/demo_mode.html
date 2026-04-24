@@ -1,0 +1,87 @@
+{% if demo_mode_enabled %}
+<style>
+.demo-alert {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #ff4444;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    max-width: 350px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.demo-alert.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.demo-alert-close {
+    background: none;
+    border: none;
+    color: white;
+    margin-left: 10px;
+    cursor: pointer;
+    font-size: 18px;
+    padding: 0 5px;
+}
+
+.demo-alert-message {
+    margin-right: 10px;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Create alert element
+    const alertTemplate = document.createElement('div');
+    alertTemplate.className = 'demo-alert';
+    alertTemplate.innerHTML = `
+        <span class="demo-alert-message"></span>
+        <button class="demo-alert-close">&times;</button>
+    `;
+    document.body.appendChild(alertTemplate);
+
+    // Alert function
+    function showDemoAlert(message) {
+        const alert = document.querySelector('.demo-alert');
+        const messageEl = alert.querySelector('.demo-alert-message');
+        messageEl.textContent = message;
+        alert.classList.add('show');
+
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+            alert.classList.remove('show');
+        }, 5000);
+    }
+
+    // Close button handler
+    document.querySelector('.demo-alert-close').addEventListener('click', function() {
+        document.querySelector('.demo-alert').classList.remove('show');
+    });
+
+    // Handle all form submissions
+    document.addEventListener('submit', function(event) {
+        event.preventDefault();
+        showDemoAlert('Modifications are not allowed in demo mode.');
+    });
+
+    // Handle delete links
+    document.addEventListener('click', function(event) {
+        const link = event.target.closest('a');
+        if (link && link.href && link.href.includes('delete')) {
+            event.preventDefault();
+            showDemoAlert('Deletion is not allowed in demo mode.');
+        }
+    });
+});
+</script>
+{% endif %}

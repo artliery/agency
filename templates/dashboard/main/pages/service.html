@@ -1,0 +1,202 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+    <div class="pc-content">
+        <!-- [ breadcrumb ] start -->
+        <div class="page-header">
+            <div class="page-block">
+                <div class="row align-items-center">
+                    <div class="col-md-12">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="../dashboard/index.html">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="javascript: void(0)">Pages</a></li>
+                            <li class="breadcrumb-item" aria-current="page">Service Page</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="page-header-title">
+                            <h2 class="mb-0">Service Page</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- [ breadcrumb ] end -->
+
+
+        <!-- [ Main Content ] start -->
+        <div class="row">
+            <!-- [ sample-page ] start -->
+            <div class="col-sm-12">
+                {% if SeoForm.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error:</strong>
+                    <ul>
+                        {% for field, errors in SeoForm.errors.items %}
+                        {% for error in errors %}
+                        <li>{{ field }}: {{ error }}</li>
+                        {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+                {% endif %}
+
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">SEO</h6>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form method="post">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-12 mb-2">
+                                                    <label for="{{ SeoForm.meta_title.id_for_label }}">Meta
+                                                        Title</label>
+                                                    {{ SeoForm.meta_title }}
+                                                </div>
+                                                <div class="col-md-6 col-sm-12">
+                                                    <label for="{{ SeoForm.meta_description.id_for_label }}">Meta
+                                                        Description</label>
+                                                    {{ SeoForm.meta_description }}
+                                                </div>
+                                            </div>
+                                            <!-- Ensure proper indentation for the closing </form> tag -->
+                                            <button type="submit" class="btn btn-primary mt-3 w-100">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">Service Section</h6>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="service_section_title">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="{{ service_section_title_form.title_small.id_for_label }}"
+                                                class="form-label">Section Title 1</label>
+                                            {{ service_section_title_form.title_small }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="{{ service_section_title_form.title_big.id_for_label }}"
+                                                class="form-label">Section Title 2</label>
+                                            {{ service_section_title_form.title_big }}
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-12">
+                                            <label for="{{ service_section_title_form.all_work_text.id_for_label }}"
+                                                class="form-label">Card Bottom Text ( This text will be show in service
+                                                card bottom )</label>
+                                            {{ service_section_title_form.service_card_more_text }}
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-3">Save</button>
+                                </form>
+                                <div class="d-flex justify-content-start">
+                                    <a href="{% url 'adminServiceList' %}" class="btn btn-primary"
+                                        style='margin-right:5px;'><i class="fa fa-eye"></i> View</a>
+                                    <a href="{% url 'adminServiceCreate' %}" class="btn btn-primary"><i
+                                            class="fa fa-plus"></i> Create</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">Testimonial Section</h6>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="testimonial_section_title">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="{{ testimonial_section_title_form.title_small.id_for_label }}"
+                                                class="form-label">Section Title 1</label>
+                                            {{ testimonial_section_title_form.title_small }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="{{ testimonial_section_title_form.title_big.id_for_label }}"
+                                                class="form-label">Section Title 2</label>
+                                            {{ testimonial_section_title_form.title_big }}
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-3">Save</button>
+                                </form>
+                                <div class="d-flex justify-content-start">
+                                    <a href="{% url 'adminTestimonialsElementList' %}" class="btn btn-primary"
+                                        style='margin-right:5px;'><i class="fa fa-eye"></i> View</a>
+                                    <a href="{% url 'adminTestimonialsElementCreate' %}" class="btn btn-primary"><i
+                                            class="fa fa-plus"></i> Create</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">Pricing Section</h6>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="pricing_section_title">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="{{ pricing_section_title_form.title_small.id_for_label }}"
+                                                class="form-label">Section Title 1</label>
+                                            {{ pricing_section_title_form.title_small }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="{{ pricing_section_title_form.title_big.id_for_label }}"
+                                                class="form-label">Section Title 2</label>
+                                            {{ pricing_section_title_form.title_big }}
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mb-3">Save</button>
+                                </form>
+                                <div class="d-flex justify-content-start">
+                                    <a href="{% url 'adminPricingElementList' %}" class="btn btn-primary"
+                                        style='margin-right:5px;'><i class="fa fa-eye"></i> View</a>
+                                    <a href="{% url 'adminPricingElementCreate' %}" class="btn btn-primary"><i
+                                            class="fa fa-plus"></i> Create</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+            <!-- [ sample-page ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</div>
+<!-- [ Main Content ] end -->
+{% endblock %}

@@ -1,0 +1,156 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'adminBlogList' %}">Blogs</a></li>
+              <li class="breadcrumb-item" aria-current="All Blogs">All Blogs</li>
+            </ul>
+          </div>
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h2 class="mb-0">All Blogs</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="col-md-12">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">All Blogs</h5>
+              <a class="btn btn-primary" href="{% url 'adminBlogCreate' %}"> <svg
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-plus-square">
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="12" y1="8" x2="12" y2="16"></line>
+                  <line x1="8" y1="12" x2="16" y2="12"></line>
+                </svg>Create New Blog</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [ sample-page ] start -->
+    <div class="card">
+      <div class="card-body">
+        <div class="col-sm-12">
+          <div class="card border-0 table-card user-profile-list">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover table-v-center" data-table="true">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Thumbnail</th>
+                      <th>Title</th>
+                      <th>Category</th>
+                      <th>Author</th>
+                      <th>Created At</th>
+                      <th>Last Update</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for blog in blogs %}
+                    <tr>
+                      <td class="f-w-600">{{ forloop.counter }}</td>
+                      {% if blog.thumbnail %}
+                        <td><img src="{{ blog.getTHumb }}" width="50" alt="blogthumb" style="border-radius:5px;"></td>
+                      {% else %}
+                        <td>No image</td>
+                      {% endif %}
+                      <td class="f-w-600"><a href="{% url 'adminBlogEdit' blog.id %}">{{ blog.title|slice:":20" }}...</a></td>
+                      <td class="f-w-600"><span class="tcg-badge tcg-badge-rounded tcg-badge-info">{{ blog.category }}</span></td>
+                      <td class="f-w-600">{{ blog.author }}</td>
+                      <td class="f-w-600">{{ blog.created_at }}</td>
+                      <td class="f-w-600">{{ blog.updated_at }}</td>
+                      <td>
+                        <div class="">
+                          <ul class="list-inline mb-0">
+                            <li class="list-inline-item m-0"><a href="{% url 'adminBlogEdit' blog.id %}"
+                                class="btn btn-primary btn-sm"><i class="ti ti-pencil f-18 text-white"></i></a></li>
+                            <li class="list-inline-item m-0"><button type="button" class="btn bg-danger btn-sm"
+                                data-bs-toggle="modal" data-bs-target="#deleteModal{{ blog.id }}"><i
+                                  class="ti ti-trash f-18 text-white"></i></button></li>
+
+                            <div class="modal fade" id="deleteModal{{ blog.id }}" tabindex="-1"
+                              aria-labelledby="deleteModalLabel{{ blog.id }}" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel{{ blog.id }}">
+                                      <i class="ti ti-alert-triangle text-danger me-2"></i>
+                                      Confirm Delete
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                      aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Are you sure you want to delete <strong>"{{ blog.title }}"</strong>?</p>
+                                    <p class="text-muted mb-0">This action cannot be undone.</p>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                      data-bs-dismiss="modal">Cancel</button>
+                                    <a href="{% url 'adminBlogDelete' blog.id %}" class="btn btn-danger">
+                                      <i class="ti ti-trash me-1"></i>
+                                      Delete Blog
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- [ sample-page ] end -->
+  </div>
+  <!-- [ Main Content ] end -->
+</div>
+</div>
+<!-- [ Main Content ] end -->
+{% endblock %}

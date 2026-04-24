@@ -1,0 +1,77 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load customtag %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'adminProjectCategoryList' %}">Project Categories</a></li>
+                <li class="breadcrumb-item" aria-current="Edit Category">Edit Project Category</li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h2 class="mb-0">Edit Project Category</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+         <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.media}}   
+            {% if form.errors %}
+            <div class="alert alert-danger">
+               <strong>Error:</strong>
+               <ul>
+                  {% for field, errors in form.errors.items %}
+                  {% for error in errors %}
+                  <li>{{ field }}: {{ error }}</li>
+                  {% endfor %}
+                  {% endfor %}
+               </ul>
+            </div>
+            {% endif %}                   
+            <div class="row mb-3">
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">Title<span class="text-danger">*</span></label>
+                        {{ form.name }}
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.slug.id_for_label }}" class="form-label">Slug ( Read Only )</label>
+                        {{ form.slug|attr:'readonly=readonly' }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <button class="btn btn-primary mb-3" type="submit">Update</button>
+         </form>
+      </div>
+        <!-- [ sample-page ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+{% endblock %}

@@ -1,0 +1,137 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load customtag %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'adminSliderElementList' %}">Sliders</a></li>
+                <li class="breadcrumb-item" aria-current="Edit Slider">Edit Slider</li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h2 class="mb-0">Edit Slider</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+         <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.media}}   
+            {% if form.errors %}
+            <div class="alert alert-danger">
+               <strong>Error:</strong>
+               <ul>
+                  {% for field, errors in form.errors.items %}
+                  {% for error in errors %}
+                  <li>{{ field }}: {{ error }}</li>
+                  {% endfor %}
+                  {% endfor %}
+               </ul>
+            </div>
+            {% endif %}                   
+            <div class="row mb-3">
+               <div class="col-md-12">
+                  <div class="card">
+                     <div class="card-body">
+                        {% if slider.image %}
+                            <img class="mb-2" src="{{ slider.image.url }}" style="border-radius:5px;" width="100" alt="Current Image">
+                        {% endif %}
+                        <br>
+                       <label for="{{ form.image.id_for_label }}" class="form-label">Image</label>
+                       {{ form.image }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row mb-3">
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+                        {{ form.title }}
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.subtitle.id_for_label }}" class="form-label">Sub-Title</label>
+                        {{ form.subtitle }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row mb-3">
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.button1_text.id_for_label }}" class="form-label">Button 1 Text</label>
+                        {{ form.button1_text }}
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.button1_url.id_for_label }}" class="form-label">Button 1 Url</label>
+                        {{ form.button1_url }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row mb-3">
+             <div class="col-md-6">
+                <div class="card">
+                   <div class="card-body">
+                      <label for="{{ form.button2_text.id_for_label }}" class="form-label">Button 2 Text</label>
+                      {{ form.button2_text }}
+                   </div>
+                </div>
+             </div>
+             <div class="col-md-6">
+                <div class="card">
+                   <div class="card-body">
+                      <label for="{{ form.button2_url.id_for_label }}" class="form-label">Button 2 Url</label>
+                      {{ form.button2_url }}
+                   </div>
+                </div>
+             </div>
+          </div>
+            <div class="row mb-1">
+               <div class="col-md-12">
+                  <div class="card">
+                     <div class="card-body">
+                        <label for="{{ form.description.id_for_label }}" class="form-label">Description</label>
+                        {{ form.description }}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <button class="btn btn-primary mb-3" type="submit">Update</button>
+         </form>
+      </div>
+        <!-- [ sample-page ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+{% endblock %}

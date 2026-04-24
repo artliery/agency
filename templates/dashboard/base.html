@@ -1,0 +1,816 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <!-- [Head] start -->
+
+  <head>
+    <title>{% block title %} {% endblock title %}</title>
+    <!-- [Meta] -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="description"
+      content="Light Able admin and dashboard template offer a variety of UI elements and pages, ensuring your admin panel is both fast and effective."
+    />
+    <meta name="author" content="phoenixcoded" />
+
+    <!-- [Favicon] icon -->
+    <link rel="icon" href="{{ settings.getFavicon }}" type="image/x-icon">
+      <link rel="shortcut icon" href="{{ settings.getFavicon }}" type="image/x-icon">
+ <!-- [Google Font : Public Sans] icon -->
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<!-- [phosphor Icons] https://phosphoricons.com/ -->
+<link rel="stylesheet" href="{% static 'dashboard/assets/fonts/phosphor/duotone/style.css' %}" />
+<!-- [Tabler Icons] https://tablericons.com -->
+<link rel="stylesheet" href="{% static 'dashboard/assets/fonts/tabler-icons.min.css' %}" />
+<!-- [Feather Icons] https://feathericons.com -->
+<link rel="stylesheet" href="{% static 'dashboard/assets/fonts/feather.css' %}" />
+<!-- [Font Awesome Icons] https://fontawesome.com/icons -->
+<link rel="stylesheet" href="{% static 'dashboard/assets/fonts/fontawesome.css' %}" />
+<!-- [Material Icons] https://fonts.google.com/icons -->
+<link rel="stylesheet" href="{% static 'dashboard/assets/fonts/material.css' %}" />
+<!-- [Template CSS Files] -->
+<link rel="stylesheet" href="{% static 'dashboard/assets/css/style.css' %}" id="main-style-link" />
+<link rel="stylesheet" href="{% static 'dashboard/assets/css/style-preset.css' %}" />
+<link rel="stylesheet" href="{% static 'dashboard/assets/css/plugins/style.css' %}" />
+    <style>
+      .ckf{
+    border:none !important; 
+    background:transparent !important; 
+    padding: 0px !important;
+    }
+    .cke {
+      width: 100% !important;
+      }
+
+      .django-ckeditor-widget {
+    width: 100% !important;
+}
+
+      /* Logo theme switching */
+      .logo-light {
+        display: none;
+      }
+      .logo-dark {
+        display: block;
+      }
+      
+      [data-pc-theme="dark"] .logo-light,
+      [data-bs-theme="dark"] .logo-light {
+        display: block;
+      }
+      
+      [data-pc-theme="dark"] .logo-dark,
+      [data-bs-theme="dark"] .logo-dark {
+        display: none;
+      }
+    </style>
+  </head>
+  <!-- [Head] end -->
+  <!-- [Body] Start -->
+
+  <body data-pc-preset="preset-1" data-pc-sidebar-theme="light" data-pc-sidebar-caption="true" data-pc-direction="ltr">
+    <!-- [ Pre-loader ] start -->
+<div class="loader-bg">
+  <div class="loader-track">
+    <div class="loader-fill"></div>
+  </div>
+</div>
+<!-- [ Pre-loader ] End -->
+ <!-- [ Sidebar Menu ] start -->
+<nav class="pc-sidebar">
+  <div class="navbar-wrapper">
+    <div class="m-header">
+      <a href="{% url 'adminHome' %}" class="b-brand text-primary">
+          <!-- ========   Change your logo from here   ============ -->
+          <img src="{{ settings.getLogoLight }}" alt="logo image" class="logo-light" width="200" height="45" />
+          <img src="{{ settings.getLogoDark }}" alt="logo image" class="logo-dark" width="200" height="45" />
+      </a>
+    </div>
+    <div class="navbar-content">
+      <ul class="pc-navbar">
+        <li class="pc-item pc-caption">
+          <label data-i18n="Navigation">Navigation</label>
+          <i class="ph-duotone ph-gauge"></i>
+        </li>
+        <li class="pc-item">
+          <a href="{% url 'adminHome' %}" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-gauge"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Dashboard">Dashboard</span>
+          </a>
+        </li>
+        {% if request.user.role == 'Admin' %}
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-file"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Pages">Pages</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminHomePage" %}" data-i18n="Home Page">Home Page</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminAboutPage" %}" data-i18n="About Page">About Page</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminServicePage" %}" data-i18n="Service Page">Service Page</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminProjectPage" %}" data-i18n="Project Page">Project Page</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminPricingPage" %}" data-i18n="Pricing Page">Pricing Page</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminContactPage" %}" data-i18n="Contact Page">Contact Page</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminBlogPage" %}" data-i18n="Blog Page">Blog Page</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminTermsPage" %}" data-i18n="Terms Page">Terms Page</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminPolicyPage" %}" data-i18n="Policy Page">Policy Page</a></li>
+          </ul>
+        </li>
+        
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-file-text"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Custom Pages">Custom Pages</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "adminCustomPage" %}" data-i18n="All Pages">All Pages</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminCustomPageCreate" %}" data-i18n="Create Page">Create Page</a></li>
+          </ul>
+        </li>
+        {% endif %}
+        <li class="pc-item pc-caption">
+          <label data-i18n="Others">Site Configuration</label>
+          <i class="ph-duotone ph-chart-pie"></i>
+        </li>
+        
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-file-text"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Blogs">Blogs</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "adminBlogList" %}" data-i18n="Blog Lists">Blog Lists</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminBlogCreate" %}" data-i18n="Create Blog">Create Blog</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminBlogCategoryList" %}" data-i18n="Blog Categories">Blog Categories</a></li>
+          </ul>
+        </li>
+
+        {% if request.user.role == 'Admin' %}
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-briefcase"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Projects">Projects</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "adminProjectList" %}" data-i18n="Project Lists">Project Lists</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminProjectCreate" %}" data-i18n="Create Project">Create Project</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminProjectCategoryList" %}" data-i18n="Project Categories">Project Categories</a></li>
+          </ul>
+        </li>
+
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-wrench"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Services">Services</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "adminServiceList" %}" data-i18n="Service Lists">Service Lists</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminServiceCreate" %}" data-i18n="Create Service">Create Service</a></li>
+          </ul>
+        </li>
+
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-package"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Elements">Elements</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "adminSliderElementList" %}" data-i18n="Slider">Slider</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminFunFactElementList" %}" data-i18n="Fun Facts">Fun Facts</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminClientElementList" %}" data-i18n="Clients">Clients</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminTestimonialsElementList" %}" data-i18n="Testimonials">Testimonials</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminTeamElementList" %}" data-i18n="Team Members">Team Members</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "adminPricingElementList" %}" data-i18n="Pricing">Pricing</a></li>
+          </ul>
+        </li>
+
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-user"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Users">Users</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "usersList" %}" data-i18n="User Lists">User Lists</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "createUser" %}" data-i18n="Create User">Create User</a></li>
+          </ul>
+        </li>
+
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-table"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Form Data">Form Data</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminContactList" %}" data-i18n="Contact Form">Contact Form</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminSubscriberList" %}" data-i18n="Subscribe Form">Subscribe Form</a></li>
+          </ul>
+        </li>
+
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-link"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Menus">Menus</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminPrimaryMenuList" %}" data-i18n="Primary Menu">Primary Menu</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminSubMenuList" %}" data-i18n="Sub Menu">Sub Menu</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminPrimaryMenuCreate" %}" data-i18n="Create New">Create New</a></li>
+          </ul>
+        </li>
+
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-gear"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Settings">Settings</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminWebsiteSettings" %}" data-i18n="Website Settings">Website Settings</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdmintemplateSettings" %}" data-i18n="Template Settings">Template Settings</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminHeaderFooterSettings" %}" data-i18n="Header Footer">Header Footer</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "AdminSEOSettings" %}" data-i18n="SEO">SEO</a></li>
+          </ul>
+        </li>
+        {% endif %}
+
+        <li class="pc-item pc-caption">
+          <label data-i18n="Applications">Applications</label>
+          <i class="ph-duotone ph-chart-pie"></i>
+        </li>
+
+        <li class="pc-item pc-hasmenu">
+          <a href="javascript:void(0)" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-paper-plane-tilt"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Marketing Tools">Marketing Tools</span><span class="pc-arrow"><i data-feather="chevron-right"></i></span
+          ></a>
+          <ul class="pc-submenu">
+            {% if request.user.role == 'Admin' %}
+            <li class="pc-item"><a class="pc-link" href="{% url "emailMarketing" %}" data-i18n="Email Marketing">Email Marketing</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "smsMarketing" %}" data-i18n="SMS Marketing">SMS Marketing</a></li>
+            {% endif %}
+            <li class="pc-item"><a class="pc-link" href="{% url "emailFormator" %}" data-i18n="Email Formator">Email Formator</a></li>
+            <li class="pc-item"><a class="pc-link" href="{% url "numberFormator" %}" data-i18n="Number Formator">Number Formator</a></li>
+          </ul>
+        </li>
+
+        <li class="pc-item">
+          <a href="{% if request.is_secure %}https://{{ request.get_host }}/sitemap.xml{% else %}http://{{ request.get_host }}/sitemap.xml{% endif %}" class="pc-link">
+            <span class="pc-micon">
+              <i class="ph-duotone ph-compass"></i>
+            </span>
+            <span class="pc-mtext" data-i18n="Sitemap">Sitemap</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+    <div class="card pc-user-card">
+      <div class="card-body">
+        <div class="d-flex align-items-center">
+          <div class="flex-shrink-0">
+            <img src="{{ request.user.get_profile_image }}" alt="user-image" class="user-avtar wid-45 rounded-circle" />
+          </div>
+          <div class="flex-grow-1 ms-3">
+            <div class="dropdown">
+              <a href="javascript:void(0)" class="arrow-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="0,20">
+                <div class="d-flex align-items-center">
+                  <div class="flex-grow-1 me-2">
+                    <h6 class="mb-0">{{ request.user.get_profile_name }}</h6>
+                    <small>{{ request.user.role }}</small>
+                  </div>
+                  <div class="flex-shrink-0">
+                    <div class="btn btn-icon btn-link-secondary avtar">
+                      <i class="ph-duotone ph-windows-logo"></i>
+                    </div>
+                  </div>
+                </div>
+              </a>
+              <div class="dropdown-menu">
+                <ul>
+                  <li>
+                    <a class="pc-user-links" href="{% url 'editUserProfile' request.user.id %}">
+                      <i class="ph-duotone ph-user"></i>
+                      <span>My Account</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="pc-user-links" href="{% url 'changePassword' request.user.id %}">
+                      <i class="ph-duotone ph-key"></i>
+                      <span>Change Pass</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="pc-user-links" href="{% url 'AdminWebsiteSettings' %}">
+                      <i class="ph-duotone ph-gear"></i>
+                      <span>Settings</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="pc-user-links" href="{% url 'LogOut' %}">
+                      <i class="ph-duotone ph-power"></i>
+                      <span>Logout</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- [ Sidebar Menu ] end -->
+ <!-- [ Header Topbar ] start -->
+<header class="pc-header">
+  <div class="header-wrapper"> <!-- [Mobile Media Block] start -->
+<div class="me-auto pc-mob-drp">
+  <ul class="list-unstyled">
+    <!-- ======= Menu collapse Icon ===== -->
+    <li class="pc-h-item pc-sidebar-collapse">
+      <a href="javascript:void(0)" class="pc-head-link ms-0" id="sidebar-hide">
+        <i class="ti ti-menu-2"></i>
+      </a>
+    </li>
+    <li class="pc-h-item pc-sidebar-popup">
+      <a href="javascript:void(0)" class="pc-head-link ms-0" id="mobile-collapse">
+        <i class="ti ti-menu-2"></i>
+      </a>
+    </li>
+    <li class="dropdown pc-h-item d-inline-flex d-md-none">
+      <a
+        class="pc-head-link dropdown-toggle arrow-none m-0"
+        data-bs-toggle="dropdown"
+        href="javascript:void(0)"
+        role="button"
+        aria-haspopup="false"
+        aria-expanded="false"
+      >
+        <i class="ph-duotone ph-magnifying-glass"></i>
+      </a>
+      <div class="dropdown-menu pc-h-dropdown drp-search">
+        <form class="px-3">
+          <div class="mb-0 d-flex align-items-center">
+            <input type="search" class="form-control border-0 shadow-none" placeholder="Search..." />
+            <button class="btn btn-light-secondary btn-search">Search</button>
+          </div>
+        </form>
+      </div>
+    </li>
+    <li class="pc-h-item d-none d-md-inline-flex">
+      <form class="form-search">
+        <i class="ph-duotone ph-magnifying-glass icon-search"></i>
+        <input type="search" class="form-control" placeholder="Search..." />
+
+        <button class="btn btn-search" style="padding: 0"><kbd>ctrl+k</kbd></button>
+      </form>
+    </li>
+  </ul>
+</div>
+<!-- [Mobile Media Block end] -->
+<div class="ms-auto">
+  <ul class="list-unstyled">
+    <li class="pc-h-item">
+      <a
+        class="pc-head-link arrow-none me-0"
+        id="pc-theme-toggle"
+        href="javascript:void(0)"
+        role="button"
+        aria-haspopup="false"
+        aria-expanded="false"
+      >
+        <i class="ph-duotone ph-sun-dim"></i>
+      </a>
+    </li>
+    <li class="pc-h-item">
+      <a class="pc-head-link pct-c-btn" href="javascript:void(0)" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_pc_layout">
+        <i class="ph-duotone ph-gear-six"></i>
+      </a>
+    </li>
+    <li class="dropdown pc-h-item header-user-profile">
+      <a
+        class="pc-head-link dropdown-toggle arrow-none me-0"
+        data-bs-toggle="dropdown"
+        href="javascript:void(0)"
+        role="button"
+        aria-haspopup="false"
+        data-bs-auto-close="outside"
+        aria-expanded="false"
+      >
+        <img src="{{ request.user.get_profile_image }}" alt="user-image" class="user-avtar" />
+      </a>
+      <div class="dropdown-menu dropdown-user-profile dropdown-menu-end pc-h-dropdown">
+        <div class="dropdown-header d-flex align-items-center justify-content-between">
+          <h5 class="m-0">Profile</h5>
+        </div>
+        <div class="dropdown-body">
+          <div class="profile-notification-scroll position-relative" style="max-height: calc(100vh - 225px)">
+            <ul class="list-group list-group-flush w-100">
+              <li class="list-group-item">
+                <div class="d-flex align-items-center">
+                  <div class="flex-shrink-0">
+                    <img src="{{ request.user.get_profile_image }}" alt="user-image" class="wid-50 rounded-circle" />
+                  </div>
+                  <div class="flex-grow-1 mx-3">
+                    <h5 class="mb-0">{{ request.user.get_profile_name }}</h5>
+                    <a class="link-primary" href="mailto:{{ request.user.email }}">{{ request.user.email }}</a>
+                  </div>
+                  <span class="badge bg-primary">{{ request.user.role }}</span>
+                </div>
+              </li>
+              <li class="list-group-item">
+                <a href="{% url 'changePassword' request.user.id %}" class="dropdown-item">
+                  <span class="d-flex align-items-center">
+                    <i class="ph-duotone ph-key"></i>
+                    <span>Change password</span>
+                  </span>
+                </a>
+              </li>
+              <li class="list-group-item">
+                <a href="{% url 'editUserProfile' request.user.id %}" class="dropdown-item">
+                  <span class="d-flex align-items-center">
+                    <i class="ph-duotone ph-user-circle"></i>
+                    <span>Edit profile</span>
+                  </span>
+                </a>
+                {% if request.user.role == 'Admin' %}
+                <a href="{% url 'AdminWebsiteSettings' %}" class="dropdown-item">
+                  <span class="d-flex align-items-center">
+                    <i class="ph-duotone ph-gear-six"></i>
+                    <span>Settings</span>
+                  </span>
+                </a>
+                {% endif %}
+              </li>
+              <li class="list-group-item">
+                <a href="{% url 'LogOut' %}" class="dropdown-item">
+                  <span class="d-flex align-items-center">
+                    <i class="ph-duotone ph-power"></i>
+                    <span>Logout</span>
+                  </span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
+ </div>
+</header>
+<!-- [ Header ] end -->
+
+{% block content %}{% endblock content %}
+
+    <footer class="pc-footer">
+      <div class="footer-wrapper container-fluid">
+        <div class="row">
+          <div class="col-sm-6 my-1">
+            <p class="m-0">Copyright © {% now "Y" %} <a href="#">{{ settings.name }}</a></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+ <!-- Required Js -->
+<script data-cfasync="false" src="{% static 'dashboard/assets/js/plugins/popper.min.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/plugins/simplebar.min.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/plugins/bootstrap.min.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/plugins/i18next.min.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/plugins/i18nextHttpBackend.min.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/icon/custom-font.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/script.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/theme.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/multi-lang.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/plugins/feather.min.js' %}"></script>
+<script src="{% static 'dashboard/assets/js/plugins/simple-datatables.js' %}"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const themeToggleButton = document.getElementById('pc-theme-toggle');
+    if (themeToggleButton) {
+      const themeIcon = themeToggleButton.querySelector('i');
+
+      const updateIcon = () => {
+        const currentTheme = document.body.getAttribute('data-pc-theme') || document.documentElement.getAttribute('data-bs-theme');
+        if (currentTheme === 'dark') {
+          themeIcon.className = 'ph-duotone ph-moon';
+        } else {
+          themeIcon.className = 'ph-duotone ph-sun-dim';
+        }
+      };
+
+      // Function to update logo visibility based on theme
+      const updateLogoVisibility = () => {
+        const currentTheme = document.body.getAttribute('data-pc-theme') || document.documentElement.getAttribute('data-bs-theme');
+        const logoLight = document.querySelector('.logo-light');
+        const logoDark = document.querySelector('.logo-dark');
+        
+        if (logoLight && logoDark) {
+          if (currentTheme === 'dark') {
+            logoLight.style.display = 'block';
+            logoDark.style.display = 'none';
+          } else {
+            logoLight.style.display = 'none';
+            logoDark.style.display = 'block';
+          }
+        }
+      };
+
+      themeToggleButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        let theme = 'light';
+        try {
+          const storedTheme = localStorage.getItem('theme-mode');
+          if(storedTheme) {
+            theme = storedTheme;
+          }
+        } catch (err) {
+          console.error("Could not access localStorage: ", err);
+        }
+
+        if (theme === 'dark') {
+          layout_change('light');
+        } else {
+          layout_change('dark');
+        }
+      });
+
+      // Set the initial icon and logo visibility
+      updateIcon();
+      updateLogoVisibility();
+      
+      const observer = new MutationObserver(mutations => {
+          mutations.forEach(mutation => {
+              if (mutation.type === 'attributes' && (mutation.attributeName === 'data-pc-theme' || mutation.attributeName === 'data-bs-theme')) {
+                  updateIcon();
+                  updateLogoVisibility();
+              }
+          });
+      });
+
+      observer.observe(document.body, { attributes: true, attributeFilter: ['data-pc-theme'] });
+      observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-bs-theme'] });
+    }
+  });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.querySelector('.form-search .form-control');
+    const pcNavbar = document.querySelector('.pc-navbar');
+
+    if (searchInput && pcNavbar) {
+        const allMenuItems = Array.from(pcNavbar.querySelectorAll('.pc-item'));
+        const allHasMenu = Array.from(pcNavbar.querySelectorAll('.pc-hasmenu'));
+        const allSubMenus = Array.from(pcNavbar.querySelectorAll('.pc-submenu'));
+        const allCaptions = Array.from(pcNavbar.querySelectorAll('.pc-caption'));
+
+        searchInput.addEventListener('keyup', function () {
+            const filter = searchInput.value.trim().toUpperCase();
+
+            // 1. Reset state when input is empty
+            if (filter === '') {
+                allMenuItems.forEach(item => { item.style.display = ''; });
+                allHasMenu.forEach(menu => { menu.classList.remove('pc-trigger'); });
+                allSubMenus.forEach(submenu => { submenu.style.display = ''; });
+                allCaptions.forEach(caption => { caption.style.display = ''; });
+                return;
+            }
+
+            // 2. Hide all captions when searching
+            allCaptions.forEach(caption => { caption.style.display = 'none'; });
+
+            // 3. Filter leaf nodes (items that are not parents)
+            allMenuItems.forEach(item => {
+                if (item.classList.contains('pc-hasmenu')) return;
+                const link = item.querySelector('.pc-link');
+                const text = (link ? link.innerText : item.innerText).trim().toUpperCase();
+                item.style.display = text.indexOf(filter) > -1 ? '' : 'none';
+            });
+
+            // 4. Update parent menu visibility and expansion
+            allHasMenu.forEach(menu => {
+                const parentLink = menu.querySelector(':scope > .pc-link');
+                const parentText = (parentLink ? parentLink.innerText : '').trim().toUpperCase();
+                const subMenu = menu.querySelector(':scope > .pc-submenu');
+                
+                let hasVisibleChild = false;
+                if (subMenu) {
+                    hasVisibleChild = Array.from(subMenu.querySelectorAll('.pc-item')).some(child => child.style.display !== 'none');
+                }
+                
+                if (parentText.indexOf(filter) > -1 || hasVisibleChild) {
+                    menu.style.display = '';
+                    menu.classList.add('pc-trigger');
+                    if (subMenu) subMenu.style.display = 'block';
+                } else {
+                    menu.style.display = 'none';
+                    menu.classList.remove('pc-trigger');
+                    if (subMenu) subMenu.style.display = 'none';
+                }
+            });
+        });
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            if (searchInput) {
+                searchInput.focus();
+            }
+        }
+    });
+});
+</script>
+   
+ <div class="offcanvas border-0 pct-offcanvas offcanvas-end" tabindex="-1" id="offcanvas_pc_layout">
+  <div class="offcanvas-header justify-content-between">
+    <h5 class="offcanvas-title">Settings</h5>
+    <button type="button" class="btn btn-icon btn-link-danger" data-bs-dismiss="offcanvas" aria-label="Close"
+      ><i class="ti ti-x"></i
+    ></button>
+  </div>
+  <div class="pct-body customizer-body">
+    <div class="offcanvas-body py-0">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="pc-dark">
+            <h6 class="mb-1">Theme Mode</h6>
+            <p class="text-muted text-sm">Choose light or dark mode</p>
+            <div class="row theme-color theme-layout">
+              <div class="col-6">
+                <div class="d-grid">
+                  <button class="preset-btn btn active" data-value="true" onclick="layout_change('light');">
+                    <span class="btn-label">Light</span>
+                    <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-grid">
+                  <button class="preset-btn btn" data-value="false" onclick="layout_change('dark');">
+                    <span class="btn-label">Dark</span>
+                    <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item pc-sidebar-color">
+          <h6 class="mb-1">Sidebar Theme</h6>
+          <p class="text-muted text-sm">Choose Sidebar Theme</p>
+          <div class="row theme-color theme-sidebar-color">
+            <div class="col-6">
+              <div class="d-grid">
+                <button class="preset-btn btn" data-value="true" onclick="layout_sidebar_change('dark');">
+                  <span class="btn-label">Dark</span>
+                  <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                </button>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-grid">
+                <button class="preset-btn btn active" data-value="false" onclick="layout_sidebar_change('light');">
+                  <span class="btn-label">Light</span>
+                  <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <h6 class="mb-1">Accent color</h6>
+          <p class="text-muted text-sm">Choose your primary theme color</p>
+          <div class="theme-color preset-color">
+            <a href="javascript:void(0)" class="active" data-value="preset-1"><i class="ti ti-check"></i></a>
+            <a href="javascript:void(0)" data-value="preset-2"><i class="ti ti-check"></i></a>
+            <a href="javascript:void(0)" data-value="preset-3"><i class="ti ti-check"></i></a>
+            <a href="javascript:void(0)" data-value="preset-4"><i class="ti ti-check"></i></a>
+            <a href="javascript:void(0)" data-value="preset-5"><i class="ti ti-check"></i></a>
+            <a href="javascript:void(0)" data-value="preset-6"><i class="ti ti-check"></i></a>
+            <a href="javascript:void(0)" data-value="preset-7"><i class="ti ti-check"></i></a>
+            <a href="javascript:void(0)" data-value="preset-8"><i class="ti ti-check"></i></a>
+            <a href="javascript:void(0)" data-value="preset-9"><i class="ti ti-check"></i></a>
+            <a href="javascript:void(0)" data-value="preset-10"><i class="ti ti-check"></i></a>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <h6 class="mb-1">Sidebar Caption</h6>
+          <p class="text-muted text-sm">Sidebar Caption Hide/Show</p>
+          <div class="row theme-color theme-nav-caption">
+            <div class="col-6">
+              <div class="d-grid">
+                <button class="preset-btn btn active" data-value="true" onclick="layout_caption_change('true');">
+                  <span class="btn-label">Caption Show</span>
+                  <span class="pc-lay-icon"
+                    ><span></span><span></span><span><span></span><span></span></span><span></span
+                  ></span>
+                </button>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="d-grid">
+                <button class="preset-btn btn" data-value="false" onclick="layout_caption_change('false');">
+                  <span class="btn-label">Caption Hide</span>
+                  <span class="pc-lay-icon"
+                    ><span></span><span></span><span><span></span><span></span></span><span></span
+                  ></span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="pc-rtl">
+            <h6 class="mb-1">Theme Layout</h6>
+            <p class="text-muted text-sm">LTR/RTL</p>
+            <div class="row theme-color theme-direction">
+              <div class="col-6">
+                <div class="d-grid">
+                  <button class="preset-btn btn active" data-value="false" onclick="layout_rtl_change('false');">
+                    <span class="btn-label">LTR</span>
+                    <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-grid">
+                  <button class="preset-btn btn" data-value="true" onclick="layout_rtl_change('true');">
+                    <span class="btn-label">RTL</span>
+                    <span class="pc-lay-icon"><span></span><span></span><span></span><span></span></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item pc-box-width">
+          <div class="pc-container-width">
+            <h6 class="mb-1">Layout Width</h6>
+            <p class="text-muted text-sm">Choose Full or Container Layout</p>
+            <div class="row theme-color theme-container">
+              <div class="col-6">
+                <div class="d-grid">
+                  <button class="preset-btn btn active" data-value="false" onclick="change_box_container('false')">
+                    <span class="btn-label">Full Width</span>
+                    <span class="pc-lay-icon"
+                      ><span></span><span></span><span></span><span><span></span></span
+                    ></span>
+                  </button>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="d-grid">
+                  <button class="preset-btn btn" data-value="true" onclick="change_box_container('true')">
+                    <span class="btn-label">Fixed Width</span>
+                    <span class="pc-lay-icon"
+                      ><span></span><span></span><span></span><span><span></span></span
+                    ></span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="d-grid">
+            <button class="btn btn-light-danger" id="layoutreset">Reset Layout</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+{% include "error/demo_mode.html" %}
+
+  </body>
+  <!-- [Body] end -->
+</html>

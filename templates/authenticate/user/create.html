@@ -1,0 +1,285 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load customtag %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<style>
+  .password-input {
+    position: relative;
+  }
+  .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6b7280;
+    transition: color 0.3s ease;
+    z-index: 10;
+  }
+  .toggle-password:hover {
+    color: #6366f1;
+  }
+  .form-card {
+    transition: all 0.3s ease;
+  }
+  .form-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+</style>
+
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'usersList' %}">Users</a></li>
+              <li class="breadcrumb-item" aria-current="Create User">Create User</li>
+            </ul>
+          </div>
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h2 class="mb-0">Create New User</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+
+      {% if form.errors %}
+      <div class="col-md-12">
+        <div class="alert alert-danger">
+          <strong>Error:</strong>
+          <ul class="mb-0">
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>User Information</h5>
+            <p class="text-muted mb-0">Fill in the details to create a new user account</p>
+          </div>
+          <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{form.media}}
+
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">
+                          <i class="ti ti-user me-1"></i>Full Name <span class="text-danger">*</span>
+                        </label>
+                        {{ form.name|add_class:'form-control' }}
+                        {% if form.name.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.name.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">
+                          <i class="ti ti-mail me-1"></i>Email Address <span class="text-danger">*</span>
+                        </label>
+                        {{ form.email|add_class:'form-control' }}
+                        {% if form.email.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.email.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}" class="form-label">
+                          <i class="ti ti-at me-1"></i>Username <span class="text-danger">*</span>
+                        </label>
+                        {{ form.username|add_class:'form-control' }}
+                        {% if form.username.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.username.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.role.id_for_label }}" class="form-label">
+                          <i class="ti ti-shield me-1"></i>User Role <span class="text-danger">*</span>
+                        </label>
+                        {{ form.role|add_class:'form-select' }}
+                        {% if form.role.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.role.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.password1.id_for_label }}" class="form-label">
+                          <i class="ti ti-lock me-1"></i>Password <span class="text-danger">*</span>
+                        </label>
+                        <div class="password-input">
+                          <input type="password" id="{{ form.password1.id_for_label }}" class="form-control" name="password1" placeholder="Enter password" />
+                          <span class="toggle-password" onclick="togglePasswordVisibility('{{ form.password1.id_for_label }}')">
+                            <i class="ti ti-eye"></i>
+                          </span>
+                        </div>
+                        {% if form.password1.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.password1.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.password2.id_for_label }}" class="form-label">
+                          <i class="ti ti-lock-check me-1"></i>Confirm Password <span class="text-danger">*</span>
+                        </label>
+                        <div class="password-input">
+                          <input type="password" id="{{ form.password2.id_for_label }}" class="form-control" name="password2" placeholder="Confirm password" />
+                          <span class="toggle-password" onclick="togglePasswordVisibility('{{ form.password2.id_for_label }}')">
+                            <i class="ti ti-eye"></i>
+                          </span>
+                        </div>
+                        {% if form.password2.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.password2.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">
+                  <i class="ti ti-user-plus me-1"></i>Create User
+                </button>
+                <a href="{% url 'usersList' %}" class="btn btn-outline-secondary ms-2">
+                  <i class="ti ti-arrow-left me-1"></i>Back to Users
+                </a>
+                <button class="btn btn-outline-danger ms-2" type="reset">
+                  <i class="ti ti-refresh me-1"></i>Reset Form
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+  </div>
+  <!-- [ Main Content ] end -->
+</div>
+
+<script>
+  // Toggle password visibility
+  function togglePasswordVisibility(inputId) {
+    const input = document.getElementById(inputId);
+    const toggle = input.parentNode.querySelector('.toggle-password i');
+    
+    if (input.type === 'password') {
+      input.type = 'text';
+      toggle.className = 'ti ti-eye-off';
+    } else {
+      input.type = 'password';
+      toggle.className = 'ti ti-eye';
+    }
+  }
+
+  // Form validation enhancement
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    form.addEventListener('submit', function(e) {
+      const requiredFields = form.querySelectorAll('[required], .text-danger');
+      let isValid = true;
+      
+      requiredFields.forEach(field => {
+        if (field.value.trim() === '') {
+          isValid = false;
+          field.classList.add('is-invalid');
+        } else {
+          field.classList.remove('is-invalid');
+        }
+      });
+      
+      if (!isValid) {
+        e.preventDefault();
+        Swal.fire({
+          title: 'Validation Error',
+          text: 'Please fill in all required fields',
+          icon: 'error',
+          confirmButtonColor: '#6366f1'
+        });
+      }
+    });
+  });
+</script>
+
+{% endblock %}

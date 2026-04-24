@@ -1,0 +1,631 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="#">Settings</a></li>
+              <li class="breadcrumb-item" aria-current="Website Settings">Website Settings</li>
+            </ul>
+          </div>
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h2 class="mb-0">Website Settings</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="col-md-12">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="col-md-12">
+        <div class="alert alert-danger">
+          <strong>Error:</strong>
+          <ul>
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Website Configuration</h5>
+          </div>
+          <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{form.media}}
+              
+              <div class="row">
+                <div class="col-md-2 col-xs-12">
+                  <div class="nav flex-column nav-pills nav-primary" id="ver-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="ver-pills-home-tab" data-bs-toggle="pill" href="#ver-pills-home" role="tab" aria-controls="ver-pills-home" aria-selected="true">
+                      <i class="ti ti-settings me-2"></i>General
+                    </a>
+                    <a class="nav-link" id="ver-pills-logo-tab" data-bs-toggle="pill" href="#ver-pills-logo" role="tab" aria-controls="ver-pills-logo" aria-selected="false">
+                      <i class="ti ti-brand-html5 me-2"></i>Logo
+                    </a>
+                    <a class="nav-link" id="ver-pills-contact-tab" data-bs-toggle="pill" href="#ver-pills-contact" role="tab" aria-controls="ver-pills-contact" aria-selected="false">
+                      <i class="ti ti-phone me-2"></i>Contact
+                    </a>
+                    <a class="nav-link" id="ver-pills-sms-tab" data-bs-toggle="pill" href="#ver-pills-sms" role="tab" aria-controls="ver-pills-sms" aria-selected="false">
+                      <i class="ti ti-message-circle me-2"></i>SMS
+                    </a>
+                    <a class="nav-link" id="ver-pills-analytics-tab" data-bs-toggle="pill" href="#ver-pills-analytics" role="tab" aria-controls="ver-pills-analytics" aria-selected="false">
+                      <i class="ti ti-brand-facebook me-2"></i>Social
+                    </a>
+                    <a class="nav-link" id="ver-pills-others-tab" data-bs-toggle="pill" href="#ver-pills-others" role="tab" aria-controls="ver-pills-others" aria-selected="false">
+                      <i class="ti ti-code me-2"></i>Others
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-10 col-xs-12">
+                  <div class="tab-content" id="ver-pills-tabContent">
+                    <!-- General Tab -->
+                    <div class="tab-pane fade show active" id="ver-pills-home" role="tabpanel" aria-labelledby="ver-pills-home-tab">
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">Application Name <span class="text-danger">*</span></label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.name.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.author.id_for_label }}" class="form-label">Author</label>
+                            {{ form.author }}
+                            {% if form.author.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.author.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.currency_name.id_for_label }}" class="form-label">Currency Name</label>
+                            {{ form.currency_name }}
+                            {% if form.currency_name.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.currency_name.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.currency_symbol.id_for_label }}" class="form-label">Currency Symbol</label>
+                            {{ form.currency_symbol }}
+                            {% if form.currency_symbol.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.currency_symbol.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <div class="form-check">
+                              {{ form.slider_particle_is_active }}
+                              <label class="form-check-label" for="{{ form.slider_particle_is_active.id_for_label }}">
+                                <strong>Slider Particle Animation</strong>
+                              </label>
+                            </div>
+                            <small class="text-muted">After turning it off your website's slider particle animation will disappear. Keep it on for the animation effect.</small>
+                            {% if form.slider_particle_is_active.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.slider_particle_is_active.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <div class="form-check">
+                              {{ form.default_menu_is_active }}
+                              <label class="form-check-label" for="{{ form.default_menu_is_active.id_for_label }}">
+                                <strong>Default Menu</strong>
+                              </label>
+                            </div>
+                            <small class="text-muted">After turning it off your website's default navigation menu will disappear. You can add custom menu from <a href="{% url 'AdminPrimaryMenuList' %}">here.</a></small>
+                            {% if form.default_menu_is_active.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.default_menu_is_active.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <div class="form-check">
+                              {{ form.magic_cursor_is_active }}
+                              <label class="form-check-label" for="{{ form.magic_cursor_is_active.id_for_label }}">
+                                <strong>Magic Cursor</strong>
+                              </label>
+                            </div>
+                            <small class="text-muted">This will show a cursor effect on the website. Keep it on to enable the effect.</small>
+                            {% if form.magic_cursor_is_active.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.magic_cursor_is_active.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <div class="form-check">
+                              {{ form.show_call_now_widget }}
+                              <label class="form-check-label" for="{{ form.show_call_now_widget.id_for_label }}">
+                                <strong>Call Now Widget</strong>
+                              </label>
+                            </div>
+                            <small class="text-muted">This will show a call now widget in service & project details page.</small>
+                            {% if form.show_call_now_widget.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.show_call_now_widget.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.primary_color.id_for_label }}" class="form-label">Primary Color</label>
+                            <div class="d-flex align-items-center gap-2">
+                                {{ form.primary_color }}
+                                <span class="color-value">{{ form.primary_color.value|default:'75dab4' }}</span>
+                            </div>
+                            <small class="text-muted">This will use as the primary color of the website</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.secondary_color.id_for_label }}" class="form-label">Secondary Color</label>
+                            <div class="d-flex align-items-center gap-2">
+                                {{ form.secondary_color }}
+                                <span class="color-value">{{ form.secondary_color.value|default:'75dab4' }}</span>
+                            </div>
+                            <small class="text-muted">This will use as the text hover colors</small>
+                        </div>
+                    </div>
+                    
+                    </div>
+
+                    <!-- Logo Tab -->
+                    <div class="tab-pane fade" id="ver-pills-logo" role="tabpanel" aria-labelledby="ver-pills-logo-tab">
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.logo_light.id_for_label }}" class="form-label">Logo Light</label>
+                            {% if settings.logo_light %}
+                              <div class="mb-2">
+                                <img src="{{ settings.getLogoLight}}" width="160" alt="Current Logo Light" class="img-thumbnail">
+                              </div>
+                            {% endif %}
+                            {{ form.logo_light }}
+                            {% if form.logo_light.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.logo_light.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.logo_dark.id_for_label }}" class="form-label">Logo Dark</label>
+                            {% if settings.logo_dark %}
+                              <div class="mb-2">
+                                <img src="{{ settings.getLogoDark}}" width="160" alt="Current Logo Dark" class="img-thumbnail">
+                              </div>
+                            {% endif %}
+                            {{ form.logo_dark }}
+                            {% if form.logo_dark.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.logo_dark.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.favicon.id_for_label }}" class="form-label">Favicon</label>
+                            {% if settings.favicon %}
+                              <div class="mb-2">
+                                <img src="{{ settings.favicon.url }}" width="32" alt="Current Favicon" class="img-thumbnail">
+                              </div>
+                            {% endif %}
+                            {{ form.favicon }}
+                            {% if form.favicon.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.favicon.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Contact Tab -->
+                    <div class="tab-pane fade" id="ver-pills-contact" role="tabpanel" aria-labelledby="ver-pills-contact-tab">
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.email_address.id_for_label }}" class="form-label">Email <span class="text-danger">*</span></label>
+                            {{ form.email_address }}
+                            {% if form.email_address.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.email_address.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.phone.id_for_label }}" class="form-label">Phone</label>
+                            {{ form.phone }}
+                            {% if form.phone.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.phone.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.address.id_for_label }}" class="form-label">Address</label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.address.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.city.id_for_label }}" class="form-label">City</label>
+                            {{ form.city }}
+                            {% if form.city.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.city.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-4 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.state.id_for_label }}" class="form-label">State</label>
+                            {{ form.state }}
+                            {% if form.state.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.state.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.postal.id_for_label }}" class="form-label">Postal Code</label>
+                            {{ form.postal }}
+                            {% if form.postal.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.postal.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.country.id_for_label }}" class="form-label">Country</label>
+                            {{ form.country }}
+                            {% if form.country.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.country.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.map_iframe.id_for_label }}" class="form-label">Map Iframe Code</label>
+                            {{ form.map_iframe }}
+                            {% if form.map_iframe.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.map_iframe.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- SMS Tab -->
+                    <div class="tab-pane fade" id="ver-pills-sms" role="tabpanel" aria-labelledby="ver-pills-sms-tab">
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.twilio_sid.id_for_label }}" class="form-label">Twilio SID</label>
+                            {{ form.twilio_sid }}
+                            {% if form.twilio_sid.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.twilio_sid.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.twilio_auth_token.id_for_label }}" class="form-label">Auth Token</label>
+                            {{ form.twilio_auth_token }}
+                            {% if form.twilio_auth_token.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.twilio_auth_token.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.twilio_from_number.id_for_label }}" class="form-label">Twilio Number</label>
+                            {{ form.twilio_from_number }}
+                            {% if form.twilio_from_number.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.twilio_from_number.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Social Tab -->
+                    <div class="tab-pane fade" id="ver-pills-analytics" role="tabpanel" aria-labelledby="ver-pills-analytics-tab">
+                      <div class="row mb-3">
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.analytics_code.id_for_label }}" class="form-label">Google Analytics Measurement Code</label>
+                            {{ form.analytics_code }}
+                            {% if form.analytics_code.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.analytics_code.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.facebook_pixel_code.id_for_label }}" class="form-label">Facebook Pixel Code</label>
+                            {{ form.facebook_pixel_code }}
+                            {% if form.facebook_pixel_code.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.facebook_pixel_code.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.facebook_chat_code.id_for_label }}" class="form-label">Facebook Chat Code</label>
+                            {{ form.facebook_chat_code }}
+                            {% if form.facebook_chat_code.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.facebook_chat_code.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <div class="form-check">
+                              {{ form.whatsapp_is_active }}
+                              <label class="form-check-label" for="{{ form.whatsapp_is_active.id_for_label }}">
+                                <strong>WhatsApp Button</strong>
+                              </label>
+                            </div>
+                            {% if form.whatsapp_is_active.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.whatsapp_is_active.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <div class="form-check">
+                              {{ form.facebook_chat_is_active }}
+                              <label class="form-check-label" for="{{ form.facebook_chat_is_active.id_for_label }}">
+                                <strong>Facebook Chat Button</strong>
+                              </label>
+                            </div>
+                            {% if form.facebook_chat_is_active.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.facebook_chat_is_active.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Others Tab -->
+                    <div class="tab-pane fade" id="ver-pills-others" role="tabpanel" aria-labelledby="ver-pills-others-tab">
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.custom_css.id_for_label }}" class="form-label">Custom CSS</label>
+                            {{ form.custom_css }}
+                            {% if form.custom_css.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.custom_css.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.custom_js.id_for_label }}" class="form-label">Custom JS</label>
+                            {{ form.custom_js }}
+                            {% if form.custom_js.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.custom_js.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group mt-4">
+                <button class="btn btn-primary" type="submit">
+                  <i class="ti ti-device-floppy me-1"></i>
+                  Save Settings
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [ sample-page ] end -->
+  </div>
+  <!-- [ Main Content ] end -->
+</div>
+</div>
+<!-- [ Main Content ] end -->
+{% endblock %}
+
+{% block extrajs %}
+<script>
+    document.querySelectorAll('input[type="color"]').forEach(input => {
+        input.addEventListener('input', (e) => {
+            const hexValue = e.target.value.toUpperCase();
+            e.target.parentElement.querySelector('.color-value').textContent = hexValue;
+        });
+    });
+</script>
+{% endblock %}

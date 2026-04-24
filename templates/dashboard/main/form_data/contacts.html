@@ -1,0 +1,223 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="#">Form Data</a></li>
+              <li class="breadcrumb-item" aria-current="Contact Submissions">Contact Submissions</li>
+            </ul>
+          </div>
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h2 class="mb-0">Contact Submissions</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="col-md-12">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="col-md-12">
+        <div class="alert alert-danger">
+          <strong>Error:</strong>
+          <ul>
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="mb-0">All Contact Submissions</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [ sample-page ] start -->
+    <div class="card">
+      <div class="card-body">
+        <div class="col-sm-12">
+          <div class="card border-0 table-card user-profile-list">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover table-v-center" data-table="true">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone</th>
+                      <th>Subject</th>
+                      <th>Date</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    {% for contact in contacts %}
+                    <tr>
+                      <td class="f-w-600">{{ forloop.counter }}</td>
+                      <td class="f-w-600">{{ contact.name }}</td>
+                      <td class="f-w-600">{{ contact.email }}</td>
+                      <td class="f-w-600">{{ contact.phone }}</td>
+                      <td class="f-w-600">{{ contact.subject|slice:":30" }}...</td>
+                      <td class="f-w-600">{{ contact.created_at|date:"M d, Y" }}</td>
+                      <td>
+                        <div class="">
+                          <ul class="list-inline mb-0">
+                            <li class="list-inline-item m-0">
+                              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#viewContactModal{{ contact.id }}">
+                                <i class="ti ti-eye f-18 text-white"></i>
+                              </button>
+                            </li>
+                            <li class="list-inline-item m-0">
+                              <button type="button" class="btn bg-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ contact.id }}">
+                                <i class="ti ti-trash f-18 text-white"></i>
+                              </button>
+                            </li>
+
+                            <!-- View Contact Modal -->
+                            <div class="modal fade" id="viewContactModal{{ contact.id }}" tabindex="-1" aria-labelledby="viewContactModalLabel{{ contact.id }}" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="viewContactModalLabel{{ contact.id }}">
+                                      <i class="ti ti-user me-2"></i>
+                                      {{ contact.name }}'s Submission
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label class="form-label"><strong>Name:</strong></label>
+                                          <p class="form-control-static">{{ contact.name }}</p>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label class="form-label"><strong>Email:</strong></label>
+                                          <p class="form-control-static">
+                                            <a href="mailto:{{ contact.email }}">{{ contact.email }}</a>
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label class="form-label"><strong>Phone:</strong></label>
+                                          <p class="form-control-static">{{ contact.phone }}</p>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label class="form-label"><strong>Date:</strong></label>
+                                          <p class="form-control-static">{{ contact.created_at|date:"M d, Y" }}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label"><strong>Subject:</strong></label>
+                                      <p class="form-control-static">{{ contact.subject }}</p>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="form-label"><strong>Message:</strong></label>
+                                      <div class="mt-2 p-3 bg-light rounded" style="word-wrap: break-word; white-space: pre-wrap;">{{ contact.message }}</div>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="mailto:{{ contact.email }}?subject=Re: {{ contact.subject }}" class="btn btn-primary">
+                                      <i class="ti ti-mail me-1"></i>
+                                      Reply
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- Delete Modal -->
+                            <div class="modal fade" id="deleteModal{{ contact.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ contact.id }}" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteModalLabel{{ contact.id }}">
+                                      <i class="ti ti-alert-triangle text-danger me-2"></i>
+                                      Confirm Delete
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <p>Are you sure you want to delete <strong>"{{ contact.name }}"</strong>'s submission?</p>
+                                    <p class="text-muted mb-0">This action cannot be undone.</p>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <a href="{% url 'AdminContactDelete' contact.id %}" class="btn btn-danger">
+                                      <i class="ti ti-trash me-1"></i>
+                                      Delete Contact
+                                    </a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                    {% endfor %}
+
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- [ sample-page ] end -->
+  </div>
+  <!-- [ Main Content ] end -->
+</div>
+</div>
+<!-- [ Main Content ] end -->
+
+{% endblock %}

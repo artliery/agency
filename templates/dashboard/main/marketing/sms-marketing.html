@@ -1,0 +1,152 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}SMS Marketing - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css">
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="#">Marketing</a></li>
+              <li class="breadcrumb-item" aria-current="SMS Marketing">SMS Marketing</li>
+            </ul>
+          </div>
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h2 class="mb-0">SMS Marketing</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="col-md-12">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="col-md-12">
+        <div class="alert alert-danger">
+          <strong>Error:</strong>
+          <ul>
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="col-md-12">
+        <div class="alert alert-primary alert-dismissible fade show" role="alert" id="emailAlert">
+          <i class="ti ti-info-circle me-2"></i>
+          <strong>Note:</strong> Before sending SMS, configure Twilio from 
+          <a href="{% url 'AdminWebsiteSettings' %}" class="alert-link">settings</a> to avoid errors.
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>SMS Campaign</h5>
+            <p class="text-muted mb-0">Send marketing SMS to your contacts</p>
+          </div>
+          <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{form.media}}
+
+              <div class="row mb-4">
+                <div class="col-md-12">
+                  <div class="card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="numbers" class="form-label">
+                          <i class="ti ti-phone me-1"></i>Phone Numbers
+                          <span class="text-danger">(Must be COMMA separated with country code)</span>
+                          <span class="text-danger">*</span>
+                        </label>
+                        <div class="d-flex align-items-center mb-2">
+                          <a href="{% url 'numberFormator' %}" class="btn btn-sm btn-outline-primary">
+                            <i class="ti ti-tools me-1"></i>Use Number Formatter
+                          </a>
+                        </div>
+                        <textarea rows="6" name="numbers" id="numbers" placeholder="eg. +88012345678,+15458454112,+8452154874" class="form-control"></textarea>
+                        {% if form.numbers.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.numbers.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-12">
+                  <div class="card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="message" class="form-label">
+                          <i class="ti ti-message-circle me-1"></i>Message
+                          <span class="text-danger">*</span>
+                        </label>
+                        <small class="text-muted d-block mb-2">Keep your message concise and engaging</small>
+                        <textarea rows="3" name="message" id="message" class="form-control" placeholder="Enter your SMS message here..."></textarea>
+                        {% if form.message.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.message.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">
+                  <i class="ti ti-send me-1"></i>Send SMS Campaign
+                </button>
+                <button class="btn btn-outline-secondary ms-2" type="reset">
+                  <i class="ti ti-refresh me-1"></i>Reset Form
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+  </div>
+  <!-- [ Main Content ] end -->
+</div>
+
+{% endblock %}

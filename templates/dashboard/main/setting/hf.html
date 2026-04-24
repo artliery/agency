@@ -1,0 +1,389 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load customtag %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="#">Settings</a></li>
+              <li class="breadcrumb-item" aria-current="Header Footer Settings">Header Footer Settings</li>
+            </ul>
+          </div>
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h2 class="mb-0">Header Footer Settings</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="col-md-12">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="col-md-12">
+        <div class="alert alert-danger">
+          <strong>Error:</strong>
+          <ul>
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Header & Footer Configuration</h5>
+          </div>
+          <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{form.media}}
+              
+              <div class="row">
+                <div class="col-md-2 col-xs-12">
+                  <div class="nav flex-column nav-pills nav-primary" id="ver-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="ver-pills-social-tab" data-bs-toggle="pill" href="#ver-pills-social" role="tab" aria-controls="ver-pills-social" aria-selected="true">
+                      <i class="ti ti-brand-facebook me-2"></i>Social Links
+                    </a>
+                    <a class="nav-link" id="ver-pills-header-tab" data-bs-toggle="pill" href="#ver-pills-header" role="tab" aria-controls="ver-pills-header" aria-selected="false">
+                      <i class="ti ti-layout-header me-2"></i>Header
+                    </a>
+                    <a class="nav-link" id="ver-pills-footer-tab" data-bs-toggle="pill" href="#ver-pills-footer" role="tab" aria-controls="ver-pills-footer" aria-selected="false">
+                      <i class="ti ti-layout-footer me-2"></i>Footer
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-10 col-xs-12">
+                  <div class="tab-content" id="ver-pills-tabContent">
+                    
+                    <!-- Social Links Tab -->
+                    <div class="tab-pane fade show active" id="ver-pills-social" role="tabpanel" aria-labelledby="ver-pills-social-tab">
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.social1_icon.id_for_label }}" class="form-label">
+                              Social 01 Icon Class 
+                              <a href="https://fontawesome.com/v5/search?m=free" target="_blank" class="text-primary">
+                                <i class="ti ti-external-link me-1"></i>Get from here
+                              </a>
+                            </label>
+                            {{ form.social1_icon|attr:'placeholder=eg. fab fa-facebook-f' }}
+                            {% if form.social1_icon.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.social1_icon.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.social1_link.id_for_label }}" class="form-label">Social 01 Link</label>
+                            {{ form.social1_link|attr:'placeholder=eg. https://facebook.com/username' }}
+                            {% if form.social1_link.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.social1_link.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.social2_icon.id_for_label }}" class="form-label">
+                              Social 02 Icon Class 
+                              <a href="https://fontawesome.com/v5/search?m=free" target="_blank" class="text-primary">
+                                <i class="ti ti-external-link me-1"></i>Get from here
+                              </a>
+                            </label>
+                            {{ form.social2_icon|attr:'placeholder=eg. fab fa-instagram' }}
+                            {% if form.social2_icon.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.social2_icon.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.social2_link.id_for_label }}" class="form-label">Social 02 Link</label>
+                            {{ form.social2_link|attr:'placeholder=eg. https://instagram.com/username' }}
+                            {% if form.social2_link.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.social2_link.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.social3_icon.id_for_label }}" class="form-label">
+                              Social 03 Icon Class 
+                              <a href="https://fontawesome.com/v5/search?m=free" target="_blank" class="text-primary">
+                                <i class="ti ti-external-link me-1"></i>Get from here
+                              </a>
+                            </label>
+                            {{ form.social3_icon|attr:'placeholder=eg. fab fa-linkedin-in' }}
+                            {% if form.social3_icon.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.social3_icon.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.social3_link.id_for_label }}" class="form-label">Social 03 Link</label>
+                            {{ form.social3_link|attr:'placeholder=eg. https://linkedin.com/username' }}
+                            {% if form.social3_link.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.social3_link.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.social4_icon.id_for_label }}" class="form-label">
+                              Social 04 Icon Class 
+                              <a href="https://fontawesome.com/v5/search?m=free" target="_blank" class="text-primary">
+                                <i class="ti ti-external-link me-1"></i>Get from here
+                              </a>
+                            </label>
+                            {{ form.social4_icon|attr:'placeholder=eg. fab fa-youtube' }}
+                            {% if form.social4_icon.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.social4_icon.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.social4_link.id_for_label }}" class="form-label">Social 04 Link</label>
+                            {{ form.social4_link|attr:'placeholder=eg. https://youtube.com/username' }}
+                            {% if form.social4_link.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.social4_link.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Header Tab -->
+                    <div class="tab-pane fade" id="ver-pills-header" role="tabpanel" aria-labelledby="ver-pills-header-tab">
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.header_button_text.id_for_label }}" class="form-label">Header Button Text</label>
+                            {{ form.header_button_text }}
+                            {% if form.header_button_text.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.header_button_text.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.header_button_url.id_for_label }}" class="form-label">Header Button URL</label>
+                            {{ form.header_button_url }}
+                            {% if form.header_button_url.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.header_button_url.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Footer Tab -->
+                    <div class="tab-pane fade" id="ver-pills-footer" role="tabpanel" aria-labelledby="ver-pills-footer-tab">
+
+                      <div class="row mb-3">
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.footer_col1_description.id_for_label }}" class="form-label">Footer Column 1 Description</label>
+                            {{ form.footer_col1_description }}
+                            {% if form.footer_col1_description.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.footer_col1_description.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-md-4 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.footer_service_title.id_for_label }}" class="form-label">Footer Service Column Title</label>
+                            {{ form.footer_service_title }}
+                            {% if form.footer_service_title.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.footer_service_title.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.footer_project_title.id_for_label }}" class="form-label">Footer Project Column Title</label>
+                            {{ form.footer_project_title }}
+                            {% if form.footer_project_title.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.footer_project_title.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.footer_contact_title.id_for_label }}" class="form-label">Footer Contact Column Title</label>
+                            {{ form.footer_contact_title }}
+                            {% if form.footer_contact_title.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.footer_contact_title.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="row mb-3">
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.privacy_policy_title.id_for_label }}" class="form-label">Privacy Policy Title</label>
+                            {{ form.privacy_policy_title }}
+                            {% if form.privacy_policy_title.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.privacy_policy_title.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.terms_and_conditions_title.id_for_label }}" class="form-label">Terms & Conditions Title</label>
+                            {{ form.terms_and_conditions_title }}
+                            {% if form.terms_and_conditions_title.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.terms_and_conditions_title.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row mb-3">
+                        <div class="col-md-12 mb-3">
+                          <div class="form-group">
+                            <label for="{{ form.footer_copyright.id_for_label }}" class="form-label">Footer Copyright</label>
+                            {{ form.footer_copyright }}
+                            {% if form.footer_copyright.errors %}
+                              <div class="invalid-feedback d-block">
+                                {% for error in form.footer_copyright.errors %}
+                                  {{ error }}
+                                {% endfor %}
+                              </div>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="form-group mt-4">
+                <button class="btn btn-primary" type="submit">
+                  <i class="ti ti-device-floppy me-1"></i>
+                  Save Header Footer Settings
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- [ sample-page ] end -->
+  </div>
+  <!-- [ Main Content ] end -->
+</div>
+</div>
+<!-- [ Main Content ] end -->
+{% endblock %}

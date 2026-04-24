@@ -1,0 +1,404 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load customtag %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<style>
+  .form-card {
+    transition: all 0.3s ease;
+  }
+  .form-card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  .profile-preview {
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  .profile-preview:hover {
+    transform: scale(1.05);
+  }
+  .current-image-container {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+</style>
+
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+  <div class="pc-content">
+    <!-- [ breadcrumb ] start -->
+    <div class="page-header">
+      <div class="page-block">
+        <div class="row align-items-center">
+          <div class="col-md-12">
+            <ul class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'adminHome' %}">Dashboard</a></li>
+              <li class="breadcrumb-item"><a href="{% url 'usersList' %}">Users</a></li>
+              <li class="breadcrumb-item" aria-current="Edit Profile">Edit Profile</li>
+            </ul>
+          </div>
+          <div class="col-md-12">
+            <div class="page-header-title">
+              <h2 class="mb-0">Edit User Profile</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ breadcrumb ] end -->
+
+    <!-- [ Main Content ] start -->
+    <div class="row">
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="col-md-12">
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      {% if form.errors %}
+      <div class="col-md-12">
+        <div class="alert alert-danger">
+          <strong>Error:</strong>
+          <ul class="mb-0">
+            {% for field, errors in form.errors.items %}
+              {% for error in errors %}
+                <li>{{ field }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Profile Information</h5>
+            <p class="text-muted mb-0">Update user profile details and information</p>
+          </div>
+          <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
+              {{form.media}}
+
+              <div class="row mb-4">
+                <div class="col-md-12">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.profile_picture.id_for_label }}" class="form-label">
+                          <i class="ti ti-photo me-1"></i>Profile Picture
+                        </label>
+                        {% if profile.profile_picture %}
+                        <div class="current-image-container">
+                          <img class="profile-preview" style="width:100px; height:100px; object-fit: cover;" src="{{ profile.profile_picture.url }}" alt="Current Profile Picture">
+                          <p class="text-muted mt-2 mb-0">Current profile picture</p>
+                        </div>
+                        {% endif %}
+                        {{ form.profile_picture }}
+                        {% if form.profile_picture.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.profile_picture.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.name.id_for_label }}" class="form-label">
+                          <i class="ti ti-user me-1"></i>Full Name <span class="text-danger">*</span>
+                        </label>
+                        {{ form.name }}
+                        {% if form.name.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.name.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.email.id_for_label }}" class="form-label">
+                          <i class="ti ti-mail me-1"></i>Email Address <span class="text-danger">*</span>
+                        </label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.email.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.phone.id_for_label }}" class="form-label">
+                          <i class="ti ti-phone me-1"></i>Phone Number <span class="text-danger">*</span>
+                        </label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.phone.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.role.id_for_label }}" class="form-label">
+                          <i class="ti ti-shield me-1"></i>User Role <span class="text-danger">*</span>
+                        </label>
+                        {{ form.role|add_class:'form-select' }}
+                        {% if form.role.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.role.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.slug.id_for_label }}" class="form-label">
+                          <i class="ti ti-link me-1"></i>Profile Slug <span class="text-danger">*</span>
+                        </label>
+                        {{ form.slug }}
+                        {% if form.slug.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.slug.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.address.id_for_label }}" class="form-label">
+                          <i class="ti ti-map-pin me-1"></i>Address <span class="text-danger">*</span>
+                        </label>
+                        {{ form.address }}
+                        {% if form.address.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.address.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.city.id_for_label }}" class="form-label">
+                          <i class="ti ti-building me-1"></i>City <span class="text-danger">*</span>
+                        </label>
+                        {{ form.city }}
+                        {% if form.city.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.city.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.state.id_for_label }}" class="form-label">
+                          <i class="ti ti-map me-1"></i>State <span class="text-danger">*</span>
+                        </label>
+                        {{ form.state }}
+                        {% if form.state.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.state.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.zipcode.id_for_label }}" class="form-label">
+                          <i class="ti ti-mail me-1"></i>Zipcode <span class="text-danger">*</span>
+                        </label>
+                        {{ form.zipcode }}
+                        {% if form.zipcode.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.zipcode.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.country.id_for_label }}" class="form-label">
+                          <i class="ti ti-world me-1"></i>Country <span class="text-danger">*</span>
+                        </label>
+                        {{ form.country }}
+                        {% if form.country.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.country.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-4">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.facebook.id_for_label }}" class="form-label">
+                          <i class="ti ti-brand-facebook me-1"></i>Facebook
+                        </label>
+                        {{ form.facebook }}
+                        {% if form.facebook.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.facebook.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.instagram.id_for_label }}" class="form-label">
+                          <i class="ti ti-brand-instagram me-1"></i>Instagram
+                        </label>
+                        {{ form.instagram }}
+                        {% if form.instagram.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.instagram.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card form-card border">
+                    <div class="card-body">
+                      <div class="form-group">
+                        <label for="{{ form.linkedin.id_for_label }}" class="form-label">
+                          <i class="ti ti-brand-linkedin me-1"></i>Linkedin
+                        </label>
+                        {{ form.linkedin }}
+                        {% if form.linkedin.errors %}
+                          <div class="invalid-feedback d-block">
+                            {% for error in form.linkedin.errors %}
+                              {{ error }}
+                            {% endfor %}
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <button class="btn btn-primary" type="submit">
+                  <i class="ti ti-device-floppy me-1"></i>Update Profile
+                </button>
+                <a href="{% url 'usersList' %}" class="btn btn-outline-secondary ms-2">
+                  <i class="ti ti-arrow-left me-1"></i>Back to Users
+                </a>
+                <a href="{% url 'changePassword' profile.id %}" class="btn btn-outline-warning ms-2">
+                  <i class="ti ti-key me-1"></i>Change Password
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- [ Main Content ] end -->
+  </div>
+  <!-- [ Main Content ] end -->
+</div>
+
+{% endblock %}

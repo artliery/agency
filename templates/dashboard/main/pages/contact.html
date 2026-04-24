@@ -1,0 +1,232 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block title %}{{ title }} - {{ seo_settings.meta_title }}{% endblock title %}
+{% block content %}
+<!-- [ Main Content ] start -->
+<div class="pc-container">
+    <div class="pc-content">
+      <!-- [ breadcrumb ] start -->
+      <div class="page-header">
+        <div class="page-block">
+          <div class="row align-items-center">
+            <div class="col-md-12">
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../dashboard/index.html">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="javascript: void(0)">Pages</a></li>
+                <li class="breadcrumb-item" aria-current="page">Contact Page</li>
+              </ul>
+            </div>
+            <div class="col-md-12">
+              <div class="page-header-title">
+                <h2 class="mb-0">Contact Page</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- [ breadcrumb ] end -->
+
+
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <!-- [ sample-page ] start -->
+        <div class="col-sm-12">
+            {% if SeoForm.errors %}
+                <div class="alert alert-danger">
+                    <strong>Error:</strong>
+                    <ul>
+                        {% for field, errors in SeoForm.errors.items %}
+                            {% for error in errors %}
+                                <li>{{ field }}: {{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}  
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}  
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">SEO</h6>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <form method="post">
+                                            {% csrf_token %}  
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-12 mb-2">
+                                                    <label for="{{ SeoForm.meta_title.id_for_label }}">Meta Title</label>
+                                                    {{ SeoForm.meta_title }}
+                                                </div>
+                                                <div class="col-md-6 col-sm-12">
+                                                    <label for="{{ SeoForm.meta_description.id_for_label }}">Meta Description</label>
+                                                    {{ SeoForm.meta_description }}
+                                                </div>
+                                            </div>
+                                            <!-- Ensure proper indentation for the closing </form> tag -->
+                                            <button type="submit" class="btn btn-primary mt-3 w-100">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">Contact Form Title</h6>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <input type="hidden" name="contact_form_title">
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.contact_form_title.id_for_label }}" class="mb-2">Contact Form Title</label>
+                                            {{ contact_form_title_form.contact_form_title }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.name_field_placeholder.id_for_label }}" class="mb-2">Name Field Placeholder</label>
+                                            {{ contact_form_title_form.name_field_placeholder }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.email_field_placeholder.id_for_label }}" class="mb-2">Email Field Placeholder</label>
+                                            {{ contact_form_title_form.email_field_placeholder }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.phone_field_placeholder.id_for_label }}" class="mb-2">Phone Field Placeholder</label>
+                                            {{ contact_form_title_form.phone_field_placeholder }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.subject_field_placeholder.id_for_label }}" class="mb-2">Subject Field Placeholder</label>
+                                            {{ contact_form_title_form.subject_field_placeholder }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.message_field_placeholder.id_for_label }}" class="mb-2">Message Field Placeholder</label>
+                                            {{ contact_form_title_form.message_field_placeholder }}
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.submit_button_text.id_for_label }}" class="mb-2">Submit Button Text</label>
+                                            {{ contact_form_title_form.submit_button_text }}
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 mb-2 mt-3">
+                                            <h6 class="mb-2">Left Side Titles</h6>
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.phone_title.id_for_label }}" class="mb-2">Phone Title</label>
+                                            {{ contact_form_title_form.phone_title }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.email_title.id_for_label }}" class="mb-2">Email Title</label>
+                                            {{ contact_form_title_form.email_title }}
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 mb-2">
+                                            <label for="{{ contact_form_title_form.location_title.id_for_label }}" class="mb-2">Location Title</label>
+                                            {{ contact_form_title_form.location_title }}
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3 w-100">Save</button>
+                                </form>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">Subscribe Form Title</h6>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <input type="hidden" name="subscriber_form_title">
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ subscriber_form_title_form.top_title.id_for_label }}" class="mb-2">Top Title</label>
+                                            {{ subscriber_form_title_form.top_title }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ subscriber_form_title_form.middle_title.id_for_label }}" class="mb-2">Middle Title</label>
+                                            {{ subscriber_form_title_form.middle_title }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ subscriber_form_title_form.bottom_title.id_for_label }}" class="mb-2">Bottom Title</label>
+                                            {{ subscriber_form_title_form.bottom_title }}
+                                        </div>
+                                        <div class="col-md-6 col-sm-12 mb-2">
+                                            <label for="{{ subscriber_form_title_form.email_field_placeholder.id_for_label }}" class="mb-2">Email Field Placeholder</label>
+                                            {{ subscriber_form_title_form.email_field_placeholder }}
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 mb-2">
+                                            <label for="{{ subscriber_form_title_form.submit_button_text.id_for_label }}" class="mb-2">Submit Button Text</label>
+                                            {{ subscriber_form_title_form.submit_button_text }}
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-3 w-100">Save</button>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">Contact Details</h6>
+                                <div class="d-flex justify-content-start">
+                                    <a href="{% url 'AdminWebsiteSettings' %}" class="btn btn-primary" style='margin-right:5px;'><i class="fa fa-pencil"></i> Edit in Website Settings</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">Social Icons</h6>
+                                <div class="d-flex justify-content-start">
+                                    <a href="{% url 'AdminHeaderFooterSettings' %}" class="btn btn-primary" style='margin-right:5px;'><i class="fa fa-pencil"></i> Edit in Header Footer Settings</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-1">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="mb-3">Contact Form Submissions</h6>
+                                <div class="d-flex justify-content-start">
+                                    <a href="{% url 'AdminContactList' %}" class="btn btn-primary" style='margin-right:5px;'><i class="fa fa-eye"></i> View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+           
+         </div>
+        <!-- [ sample-page ] end -->
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+  <!-- [ Main Content ] end -->
+{% endblock %}
