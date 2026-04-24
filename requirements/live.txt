@@ -29,3 +29,4 @@ whitenoise
 yarl
 psycopg2-binary
 mysqlclient
+gunicorn
