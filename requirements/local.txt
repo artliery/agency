@@ -8,7 +8,7 @@ async-timeout
 attrs
 certifi
 charset-normalizer
-Django
+Django==4.2.30
 django-ckeditor==6.3.2
 django-js-asset
 django-modeltranslation
