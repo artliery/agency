@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor.fields import RichTextField
 from django.utils.text import slugify
+from core.media_utils import resolve_image_url
 
 class blogCategory(models.Model):
     title = models.CharField(max_length=200)
@@ -55,10 +56,10 @@ class Blogs(models.Model):
         super().save(*args, **kwargs)
 
     def getTHumb(self):
-        if self.thumbnail:
-            return self.thumbnail.url
-        else:
-            return 'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'
+        return resolve_image_url(
+            self.thumbnail,
+            'https://t4.ftcdn.net/jpg/04/73/25/49/360_F_473254957_bxG9yf4ly7OBO5I0O5KABlN930GwaMQz.jpg'
+        )
 
 class blogPageSEO(models.Model):
     meta_title = models.CharField(max_length=200, blank=True, null=True)

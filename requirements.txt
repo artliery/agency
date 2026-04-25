@@ -28,3 +28,5 @@ yarl
 psycopg2-binary
 mysqlclient
 gunicorn
+cloudinary
+django-cloudinary-storage

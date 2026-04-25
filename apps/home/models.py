@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from ckeditor.fields import RichTextField
+from core.media_utils import resolve_image_url
 
 # Sliders Model
 class sliderSection(models.Model):
@@ -44,10 +45,7 @@ class serviceSection(models.Model):
         super().save(*args, **kwargs)
 
     def getServiceImage(self):
-        if self.detail_page_image:
-            return self.detail_page_image.url
-        else:
-            return '/static/front/assets/img/placeholder.jpg'
+        return resolve_image_url(self.detail_page_image, '/static/front/assets/img/placeholder.jpg')
 
     def __str__(self):
         return self.name
@@ -135,10 +133,7 @@ class projectSection(models.Model):
         super().save(*args, **kwargs)
         
     def getProjectImage(self):
-        if self.image:
-            return self.image.url
-        else:
-            return '/static/front/assets/img/placeholder.jpg'
+        return resolve_image_url(self.image, '/static/front/assets/img/placeholder.jpg')
 
     def __str__(self):
         return self.title

@@ -7,6 +7,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 import uuid
+from core.media_utils import resolve_image_url
 
 class User(AbstractUser):
    class Role(models.TextChoices):
@@ -26,10 +27,10 @@ class User(AbstractUser):
    
    @property
    def get_profile_image(self):
-      if self.user_profile.profile_picture:
-         return self.user_profile.profile_picture.url
-      else:
-         return "https://cdn-icons-png.flaticon.com/128/3135/3135715.png"
+      return resolve_image_url(
+         self.user_profile.profile_picture,
+         "https://cdn-icons-png.flaticon.com/128/3135/3135715.png"
+      )
       
    @property
    def get_profile_name(self):
@@ -87,12 +88,10 @@ class UserProfile(models.Model):
         super(UserProfile, self).save(*args, **kwargs)
         
     def getUserImage(self):
-      image_url = ""
-      if self.profile_picture:
-         image_url = self.profile_picture.url
-      else:
-         image_url = "https://cdn-icons-png.flaticon.com/128/3135/3135715.png"
-      return image_url
+      return resolve_image_url(
+         self.profile_picture,
+         "https://cdn-icons-png.flaticon.com/128/3135/3135715.png"
+      )
 
     def __str__(self):
         return self.user.username

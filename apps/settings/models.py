@@ -1,5 +1,6 @@
 from django.db import models
 from ckeditor.fields import RichTextField
+from core.media_utils import resolve_image_url
 
 
 class websiteSetting(models.Model):
@@ -48,19 +49,13 @@ class websiteSetting(models.Model):
     secondary_color = models.CharField(max_length=100, blank=True, null=True, default="#1a1a1a")
     
     def getLogoLight(self):
-        if self.logo_light:
-            return self.logo_light.url
-        return ''
+        return resolve_image_url(self.logo_light, '')
     
     def getLogoDark(self):
-        if self.logo_dark:
-            return self.logo_dark.url
-        return ''
+        return resolve_image_url(self.logo_dark, '')
     
     def getFavicon(self):
-        if self.favicon:
-            return self.favicon.url
-        return ''
+        return resolve_image_url(self.favicon, '')
     
     def __str__(self):
         return 'Website Setting Configs'

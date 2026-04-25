@@ -29,3 +29,5 @@ whitenoise
 yarl
 psycopg2-binary
 mysqlclient
+cloudinary
+django-cloudinary-storage

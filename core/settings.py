@@ -57,6 +57,8 @@ INSTALLED_APPS = [
     'apps.custompage',
     'apps.analytics',
     'ckeditor',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 MIDDLEWARE = [
@@ -214,27 +216,30 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 
-# On Render free tier, local media persistence is limited.
-# Serve committed media files via static pipeline for reliable display.
-if not DEBUG and os.getenv("RENDER", "").lower() == "true":
-    MEDIA_URL = '/static/media/'
-    STATICFILES_DIRS.append(("media", os.path.join(BASE_DIR, "media")))
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'# white noise settings
-if os.getenv('WHITENOISE_CONFIG') == 'True':
-    STORAGES = {
-        "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
-        },
-        "default": {
-            "BACKEND": "django.core.files.storage.FileSystemStorage",
-        }
+USE_CLOUDINARY = bool(os.getenv("CLOUDINARY_URL"))
+if USE_CLOUDINARY:
+    CLOUDINARY_STORAGE = {
+        "CLOUDINARY_URL": os.getenv("CLOUDINARY_URL"),
     }
+
+STORAGES = {
+    "default": {
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage"
+        if USE_CLOUDINARY
+        else "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage"
+        if os.getenv("WHITENOISE_CONFIG") == "True"
+        else "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
+}
 
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
