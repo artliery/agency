@@ -19,6 +19,6 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        value: ".onrender.com"
+        value: ".onrender.com,artliery.com,www.artliery.com"
       - key: CSRF_TRUSTED_ORIGINS
-        value: "https://agency-uhnz.onrender.com"
+        value: "https://agency-uhnz.onrender.com,https://artliery.com,https://www.artliery.com"

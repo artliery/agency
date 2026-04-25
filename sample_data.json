@@ -1,0 +1,201 @@
+[
+{
+  "model": "sessions.session",
+  "pk": "2m7odgp3yumqo7ujt26jiiho9kdkh6oe",
+  "fields": {
+    "session_data": "eyJ2aXNpdGVkIjp0cnVlfQ:1wGTp7:mAfLhKw2_QI-KsOZI-4Pxv6SCqFOmPMaa7Aj8hixAAA",
+    "expire_date": "2026-05-09T03:36:53.448Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "2ybd2szzkk422t6vn9uhp96ks7v256si",
+  "fields": {
+    "session_data": "eyJ2aXNpdGVkIjp0cnVlfQ:1wGToS:MmvjLj89-vf9CvXrsmzE5l7S3dpIvM__Hg9FosLytcs",
+    "expire_date": "2026-05-09T03:36:12.506Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "5c1l219eodrvupsnw96yj8jtae4e0mg6",
+  "fields": {
+    "session_data": "eyJ2aXNpdGVkIjp0cnVlfQ:1wGToo:vxhkY7Sw5BK5potnPo2y6NN4IlQMtO7Cp26o5W2xcJo",
+    "expire_date": "2026-05-09T03:36:34.018Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "71xvcqa9hw57i4huvqgc5z6bm7ar02lj",
+  "fields": {
+    "session_data": "eyJ2aXNpdGVkIjp0cnVlfQ:1wGToS:MmvjLj89-vf9CvXrsmzE5l7S3dpIvM__Hg9FosLytcs",
+    "expire_date": "2026-05-09T03:36:12.917Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "9eli1q64lh1q2mpeqhoroonh0eai1qvw",
+  "fields": {
+    "session_data": "eyJ2aXNpdGVkIjp0cnVlfQ:1wGToF:6AyFVxTcGF6YjN_upMGsCL9QcaMV4mklqz3Hytj5W4s",
+    "expire_date": "2026-05-09T03:35:59.193Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "ek2c6rvnczf84tra99x874sksnbt9jhx",
+  "fields": {
+    "session_data": "eyJ2aXNpdGVkIjp0cnVlfQ:1wGToT:8Fr05-DDSlS7DP0RSy6Lobscep9V-zLxQolT05D6Iqo",
+    "expire_date": "2026-05-09T03:36:13.173Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "hk4y9xapgf7827l89pkli46jren5c127",
+  "fields": {
+    "session_data": "eyJ2aXNpdGVkIjp0cnVlfQ:1wGTom:eTwVvqnhs0AUr-C4NMTWsLxyooq97bEP-ScJoRHKrF8",
+    "expire_date": "2026-05-09T03:36:32.714Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "q7cgeh5xgjgez2n58922w1cenf64fdxd",
+  "fields": {
+    "session_data": "eyJ2aXNpdGVkIjp0cnVlfQ:1wGTon:zd7rOtBrJ1fJ1QTOAXGUBt_xo32x2KeBn6cLKs5KRmo",
+    "expire_date": "2026-05-09T03:36:33.418Z"
+  }
+},
+{
+  "model": "settings.websitesetting",
+  "pk": 1,
+  "fields": {
+    "name": "Application Name",
+    "author": "Author Name",
+    "currency_name": "Currency Name",
+    "currency_symbol": "Currency Symbol",
+    "show_call_now_widget": true,
+    "logo_light": "",
+    "logo_dark": "",
+    "favicon": "",
+    "email_address": "test@gmail.com",
+    "phone": "88012454784",
+    "price_ragne": "60$ to 7000$",
+    "address": "Your Address",
+    "city": "Your City",
+    "country": "Your Country",
+    "state": "Your State",
+    "postal": 12345,
+    "map_iframe": "Map Iframe",
+    "contact_form_image": "",
+    "analytics_code": "GA_MEASUREMENT_ID",
+    "facebook_pixel_code": "<script></script>",
+    "facebook_chat_code": "<script></script>",
+    "whatsapp_is_active": true,
+    "facebook_chat_is_active": true,
+    "slider_particle_is_active": true,
+    "default_menu_is_active": true,
+    "magic_cursor_is_active": true,
+    "custom_css": null,
+    "custom_js": null,
+    "twilio_sid": null,
+    "twilio_auth_token": null,
+    "twilio_from_number": null,
+    "primary_color": "#75dab4",
+    "secondary_color": "#1a1a1a"
+  }
+},
+{
+  "model": "settings.templatesettings",
+  "pk": 1,
+  "fields": {
+    "template1": true,
+    "template2": false
+  }
+},
+{
+  "model": "analytics.visitor",
+  "pk": 1,
+  "fields": {
+    "count": 1,
+    "os": "Mac OS X",
+    "browser": "Chrome",
+    "device": "Mac",
+    "visited_at": "2026-04-25T03:35:58.642Z"
+  }
+},
+{
+  "model": "analytics.visitor",
+  "pk": 2,
+  "fields": {
+    "count": 1,
+    "os": "Others",
+    "browser": "Others",
+    "device": "Others",
+    "visited_at": "2026-04-25T03:36:12.431Z"
+  }
+},
+{
+  "model": "analytics.visitor",
+  "pk": 3,
+  "fields": {
+    "count": 1,
+    "os": "Others",
+    "browser": "Others",
+    "device": "Others",
+    "visited_at": "2026-04-25T03:36:12.845Z"
+  }
+},
+{
+  "model": "analytics.visitor",
+  "pk": 4,
+  "fields": {
+    "count": 1,
+    "os": "Others",
+    "browser": "Others",
+    "device": "Others",
+    "visited_at": "2026-04-25T03:36:13.062Z"
+  }
+},
+{
+  "model": "analytics.visitor",
+  "pk": 5,
+  "fields": {
+    "count": 1,
+    "os": "Other",
+    "browser": "Go-http-client",
+    "device": "Other",
+    "visited_at": "2026-04-25T03:36:31.010Z"
+  }
+},
+{
+  "model": "analytics.visitor",
+  "pk": 6,
+  "fields": {
+    "count": 1,
+    "os": "Other",
+    "browser": "Go-http-client",
+    "device": "Other",
+    "visited_at": "2026-04-25T03:36:32.909Z"
+  }
+},
+{
+  "model": "analytics.visitor",
+  "pk": 7,
+  "fields": {
+    "count": 1,
+    "os": "Other",
+    "browser": "Go-http-client",
+    "device": "Other",
+    "visited_at": "2026-04-25T03:36:33.333Z"
+  }
+},
+{
+  "model": "analytics.visitor",
+  "pk": 8,
+  "fields": {
+    "count": 1,
+    "os": "Android",
+    "browser": "Chrome Mobile",
+    "device": "K",
+    "visited_at": "2026-04-25T03:36:53.366Z"
+  }
+}
+]
