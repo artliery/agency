@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: artillery-update
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate
+    startCommand: gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: WHITENOISE_CONFIG
+        value: "True"
+      - key: POSTGRE_DB
+        value: "True"
+      - key: MYSQL_DB
+        value: "False"
+      - key: DATABASE_URL
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://agency-uhnz.onrender.com"

@@ -1,5 +1,6 @@
 from pathlib import Path
 import os
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,7 +15,8 @@ def load_env():
                     key, value = line.split('=', 1)
                     os.environ[key] = value
 
-# Load environment variables from the .env file
+# Load environment variables from the .env file for local usage.
+# Render injects env vars directly, so those remain unchanged.
 load_env()
 
 # Quick-start development settings - unsuitable for production
@@ -26,7 +28,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-x=qe5@^3%@t1fk)pk@uyv&r!z^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv('DEBUG') == 'True' else False
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
+ALLOWED_HOSTS = [host.strip() for host in os.getenv('ALLOWED_HOSTS', '*').split(',') if host.strip()]
+CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',') if origin.strip()]
 
 
 # Application definition
@@ -110,7 +113,23 @@ WSGI_APPLICATION = 'core.wsgi.application'
 if os.getenv('MYSQL_DB') == 'True' and os.getenv('POSTGRE_DB') == 'True':
     raise Exception("Please select only one database to true in .env file. You can't use both MySQL and PostgreSQL at the same time.")
 
-if os.getenv('MYSQL_DB') == 'True':
+database_url = os.getenv("DATABASE_URL", "").strip()
+if database_url:
+    parsed_db = urlparse(database_url)
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": parsed_db.path.lstrip("/"),
+            "USER": parsed_db.username,
+            "PASSWORD": parsed_db.password,
+            "HOST": parsed_db.hostname,
+            "PORT": str(parsed_db.port or "5432"),
+            "OPTIONS": {
+                "client_encoding": "UTF8",
+            },
+        }
+    }
+elif os.getenv('MYSQL_DB') == 'True':
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -210,4 +229,13 @@ if os.getenv('WHITENOISE_CONFIG') == 'True':
             "BACKEND": "django.core.files.storage.FileSystemStorage",
         }
     }
+
+if not DEBUG:
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = "DENY"
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_SSL_REDIRECT = os.getenv("SECURE_SSL_REDIRECT", "True") == "True"
 
