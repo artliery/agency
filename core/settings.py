@@ -214,6 +214,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(BASE_DIR, 'media'))
 
+# On Render free tier, local media persistence is limited.
+# Serve committed media files via static pipeline for reliable display.
+if not DEBUG and os.getenv("RENDER", "").lower() == "true":
+    MEDIA_URL = '/static/media/'
+    STATICFILES_DIRS.append(("media", os.path.join(BASE_DIR, "media")))
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

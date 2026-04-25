@@ -23,7 +23,7 @@ const DEFAULT_OPTIONS = {
   },
   preloadLngs: ['en'],
   fallbackLng: "en",
-  loadPath: '../assets/json/locales/{{lng}}.json',
+  loadPath: '/static/dashboard/assets/json/locales/{{lng}}.json',
 }
 
 
